@@ -1,19 +1,30 @@
 import express from "express";
+import cors from "cors"
+import cookieParser from "cookieparser"
+import dotenv from 'dotenv';
+import bodyParser from "body-parser";
 import mongoose from 'mongoose'
 import userRouter from "./routes/userRoutes.js";
 
 
+const port = 5000;
 const app = express()
-app.dotenv.config()
+dotenv.config()
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 
 
-app.use('/', userRouter)
+app.use('/api/users/', userRouter)
 
 
 
-mongoose.connect(process.env.mongodb_uri, ()=>{
-    console.log('successfully connected to DB')
+mongoose.connect(process.env.mongodb_uri)
+.then(()=>{
+    console.log('connected to db')
+})
+.catch((err) =>{
+    console.log(err.message)
 })
 
 app.listen(port, ()=>{

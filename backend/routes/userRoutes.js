@@ -1,11 +1,10 @@
 import express from "express";
-import {create, read, remove, update, userById} from "../controllers/userCtrl";
+import {create, read, remove, update, userById, list} from "../controllers/userCtrl.js";
 
 const UserRouter = express.Router()
 
-UserRouter.route('api/users/')
-    .get(list)
-    .post(create)
+UserRouter.post('/register/', create)
+UserRouter.get('/listusers/', list)
 
 UserRouter.route('/api/users/user:id')
     .get(read)

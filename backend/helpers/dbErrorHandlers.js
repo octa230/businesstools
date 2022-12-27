@@ -19,18 +19,18 @@ const getErrMsg = ()=>{
 }
 
 
-const getuniqueErrMsg =(err)=>{
+const getuniqueErrMsg =(err)=> {
 let output 
 try {
     let fieldName =
     err.message.substring(err.message.lastIndexOf('.$') +2, err.message.lastIndexOf('_1'))
-    output = fieldName.charAt(0).toUpperCase()+fieldName.slice(1) + 'already exists' 
+    output = fieldName.charAt(0).toUpperCase() +fieldName.slice(0, 5) + 'already exists' 
 } catch (ex){
     output = 'unique field already exists'
 }
 return output
 }
 
-export default{getErrMsg}
+export default {getErrMsg, getuniqueErrMsg}
 
 

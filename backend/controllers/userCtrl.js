@@ -5,7 +5,7 @@ import getErrMsg from '../helpers/dbErrorHandlers.js'
 
 
 
-exports.create = async (req, res) => {
+const create = async (req, res) => {
     const user = new User(req.body)
     try{
         await user.save()
@@ -14,25 +14,25 @@ exports.create = async (req, res) => {
         })
     } catch (err){
         return res.status(400).json({
-            error: errHandler.getErrMsg(err)
+            error: getErrMsg.getuniqueErrMsg(err)
         }) 
     }
 
 }
 
-exports.list = async(req, res) => {
+const list = async(req, res) => {
     try{
         let users = await User.find().select('name email updated created')
         res.json(users) 
     } catch (err) {
         return res.status(400).json({
-            err: errHandler.getErrMsg(err)
+            err: getErrMsg.getuniqueErrMsg(err)
         })
     }
 
 }
 
-exports.remove = async(req, res) => {
+const remove = async(req, res) => {
     try {
         let user = req.profile
         let deletedUser = await user.remove()
@@ -40,19 +40,19 @@ exports.remove = async(req, res) => {
         res.json(deletedUser)
     } catch (err) {
         return res.status('400').json({
-            error: errHandler.getErrMsg(err)
+            error: getErrMsg.getuniqueErrMsg(err)
         })
     }
 }
 
-exports.read = async(req, res) => {
+const read = async(req, res) => {
     req.profile.hashed_password = undefined
     req.profile.salt = undefined
     return res.json(req.profile)
 }
 
 
-exports.userById = async(req, res) => {
+const userById = async(req, res) => {
     let user = await User.findById(id)
     try{
         if(!user)
@@ -68,7 +68,7 @@ exports.userById = async(req, res) => {
     }
 }
 
-exports.update = async(req, res, next ) => {
+const update = async(req, res, next ) => {
 
     try{
         let user = req.profile
@@ -80,12 +80,11 @@ exports.update = async(req, res, next ) => {
         res.json(user) 
     } catch {
         return res.status(400).json({
-            error: errHandler.getErrMsg(err)
+            error: getErrMsg.getuniqueErrMsg(err)
         })
     }
 
 }
 
 
-
-//module.exports ={create, remove, read, update, userById, list}
+export {create, remove, read, update, userById, list}
