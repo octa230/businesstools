@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 
 const UserModel = new mongoose.Schema({
     name:{
@@ -89,4 +89,4 @@ UserModel.path('hashed_password').validate((v)=>{
 
 
 
-export default mongoose.model('User', UserModel)
+exports.default = mongoose.model('User', UserModel)

@@ -1,5 +1,6 @@
-import express from "express";
-import {create, read, remove, update, userById, list} from "../controllers/userCtrl.js";
+const express = require("express");
+const {create, read, remove, update, userById, list} = require ("../controllers/userCtrl");
+const { hasAuth, signout, SignIn } = require("../controllers/authCtrl.js");
 
 const UserRouter = express.Router()
 
@@ -7,10 +8,10 @@ UserRouter.post('/register/', create)
 UserRouter.get('/listusers/', list)
 
 UserRouter.route('/api/users/user:id')
-    .get(read)
-    .put(update)
-    .delete(remove)
+    .get(SignIn, read)
+    .put(SignIn, hasAuth, update)
+    .delete(SignIn, hasAuth, remove)
 
-UserRouter.param('userId', userById)
+UserRouter.param('userId', userById);
 
-export default UserRouter
+exports.default = UserRouter;

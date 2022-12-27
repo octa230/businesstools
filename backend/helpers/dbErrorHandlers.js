@@ -31,6 +31,6 @@ try {
 return output
 }
 
-export default {getErrMsg, getuniqueErrMsg}
+exports.default = {getErrMsg, getuniqueErrMsg}
 
 

@@ -1,6 +1,10 @@
-import User from '../models/userModel.js'
-import extend from 'lodash'
-import getErrMsg from '../helpers/dbErrorHandlers.js'
+//import User from '../models/userModel.js'
+//import extend from 'lodash'
+//import getErrMsg from '../helpers/dbErrorHandlers.js'
+
+const User = require('../models/userModel')
+const extend = require('lodash')
+const getErrMsg = require('../helpers/dbErrorHandlers')
 
 
 
@@ -87,4 +91,4 @@ const update = async(req, res, next ) => {
 }
 
 
-export {create, remove, read, update, userById, list}
+module.exports = {create, remove, read, update, userById, list}
