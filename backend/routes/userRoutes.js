@@ -1,17 +1,18 @@
 const express = require("express");
-const {create, read, remove, update, userById, list} = require ("../controllers/userCtrl");
-const { hasAuth, signout, SignIn } = require("../controllers/authCtrl.js");
+const {createUser, readProfile, deleteUser, update, getSingleuser, SignIn, listUsers} = require ("../controllers/userCtrl");
+//const {SignIn, signout} = require('../controllers/authCtrl');
+const { isAuth } = require("../helpers/isAuth");
+const { isAdmin } = require("../helpers/isAdmin");
+const User = require("../models/userModel");
+
 
 const UserRouter = express.Router()
 
-UserRouter.post('/register/', create)
-UserRouter.get('/listusers/', list)
+UserRouter.post('/register/', createUser)
+UserRouter.get('/listusers/', listUsers)
+UserRouter.delete('/delete user/', isAuth, isAdmin, deleteUser);
+UserRouter.get('/api/users/:id/', isAuth, getSingleuser)
+UserRouter.put('/profile/', isAuth, readProfile)
+UserRouter.post('/signin', SignIn)
 
-UserRouter.route('/api/users/user:id')
-    .get(SignIn, read)
-    .put(SignIn, hasAuth, update)
-    .delete(SignIn, hasAuth, remove)
-
-UserRouter.param('userId', userById);
-
-exports.default = UserRouter;
+module.exports = UserRouter;

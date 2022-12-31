@@ -1,14 +1,7 @@
-//import cors from "cors"
-//import cookieParser from "cookieparser"
-//import dotenv from 'dotenv';
-//import bodyParser from "body-parser";
-//import mongoose from 'mongoose'
-//import userRouter from "./routes/userRoutes.js";
 
-const cors = require('cors')
-const cookieParser = require('cookieparser')
+const express = require('express')
+const path = require('path')
 const dotenv = require('dotenv')
-const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const userRouter = require('./routes/userRoutes')
 
@@ -16,8 +9,11 @@ const userRouter = require('./routes/userRoutes')
 const port = 8000;
 const app = express()
 dotenv.config()
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+
 
 
 
@@ -32,6 +28,9 @@ mongoose.connect(process.env.mongodb_uri)
 .catch((err) =>{
     console.log(err.message)
 })
+
+const CURRENT_WORKING_DIRECTORY = process.cwd()
+app.use('/dist', express.static(path.join(CURRENT_WORKING_DIRECTORY, 'dist')))
 
 app.use((err, req, res, next) => {
     if(err.name === 'UnauthorizedError'){

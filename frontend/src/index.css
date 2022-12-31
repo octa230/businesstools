@@ -1,0 +1,28 @@
+.homeForm{
+  display: flex;
+  border-radius: 5px;
+  width: 100%;
+  align-self: center;
+  justify-content: center;
+}
+
+/**welcome card css*/
+
+.welcomeCards{
+  display: flex;
+  padding: 12px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:12px ;
+  margin-bottom: 12px;
+}
+.cardImg{
+  width: 55px;
+}
+
+.CardBtn{
+  color: white;
+  width: 22px;
+  padding: 22px;
+  text-decoration: none;
+}
