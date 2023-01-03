@@ -1,6 +1,17 @@
 const express = require("express");
-const {createUser, readProfile, deleteUser, update, getSingleuser, SignIn, listUsers} = require ("../controllers/userCtrl");
-//const {SignIn, signout} = require('../controllers/authCtrl');
+const {
+    createUser, 
+    removeFollower,
+    removeFollowing,
+    addFollower,
+    addFollowing,
+    readProfile, 
+    deleteUser, 
+    getSingleuser, 
+    SignIn, 
+    listUsers
+} = require ("../controllers/userCtrl");
+
 const { isAuth } = require("../helpers/isAuth");
 const { isAdmin } = require("../helpers/isAdmin");
 const User = require("../models/userModel");
@@ -13,6 +24,8 @@ UserRouter.get('/listusers/', listUsers)
 UserRouter.delete('/delete user/', isAuth, isAdmin, deleteUser);
 UserRouter.get('/api/users/:id/', isAuth, getSingleuser)
 UserRouter.put('/profile/', isAuth, readProfile)
-UserRouter.post('/signin', SignIn)
+UserRouter.post('/signin/', SignIn)
+
+
 
 module.exports = UserRouter;

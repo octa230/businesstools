@@ -4,6 +4,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const userRouter = require('./routes/userRoutes')
+const postRouter = require('./routes/postRoutes')
 
 
 const port = 8000;
@@ -18,6 +19,8 @@ app.use(express.urlencoded({extended: true}))
 
 
 app.use('/api/users/', userRouter)
+app.use('/api/feed/', postRouter)
+app.use('/api/follow', )
 
 
 

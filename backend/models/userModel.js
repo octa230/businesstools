@@ -12,6 +12,14 @@ const UserModel = new mongoose.Schema(
         type: String,
         required: 'Company is required'
     },
+    photo:{
+        data: Buffer,
+        contentType: String 
+    },
+    about:{
+        type: String,
+        trim: true
+    },
     location:{
         type: String,
     },
@@ -45,6 +53,8 @@ const UserModel = new mongoose.Schema(
         type: String,
         required: [true, 'please add password']
     },
+    following:[{type: mongoose.Schema.ObjectId, ref: 'User'}],
+    followers:[{type: mongoose.Schema.ObjectId, ref: 'User'}]
 },
 {
     timestamps: true

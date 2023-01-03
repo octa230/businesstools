@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 export default function HomeScreen() {
   return (
 
-    <Container className='p-4 my-4 homeForm'>
+    <Container className='homeForm'>
           <Form>
             <Form.Text className='p-6'><h1>Sign In To Continue</h1></Form.Text>
                 <Form.Group className='mb-3' controlId='email'>

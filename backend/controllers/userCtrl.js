@@ -5,12 +5,12 @@ const generateToken = require('../helpers/generateToken')
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler');
-const { findOne } = require('../models/userModel');
+
 
 
 
 //create new user
-const createUser = asyncHandler(async (req, res) => {
+const createUser = asyncHandler(async (req, res)=> {
 
         
    hashedPassword = bcrypt.hash(req.body.password, 10, (err, hashedPassword) =>{
@@ -19,7 +19,7 @@ const createUser = asyncHandler(async (req, res) => {
 
 const newUser = new User({
   
-   name: req.body.name, 
+    name: req.body.name, 
     email: req.body.email, 
     position: req.body.position, 
     role: req.body.role, 
@@ -44,7 +44,7 @@ const newUser = new User({
 
 //get all users
 
-const listUsers = asyncHandler (async(req, res) => {
+const listUsers = asyncHandler (async(req, res)=> {
  const users = await User.find({})
  res.send(users)
 })
@@ -66,7 +66,7 @@ const deleteUser = asyncHandler(async(req, res)=> {
 
 //read & user profile 
 
-const readProfile = asyncHandler(async(req, res) => {
+const readProfile = asyncHandler(async(req, res)=> {
     const user = await User.findById(req.body._id);
     if(user){
         user.name = req.body.name || user.name,
@@ -88,7 +88,10 @@ const readProfile = asyncHandler(async(req, res) => {
 //get single user
 
 const getSingleuser = asyncHandler( async(req, res)=> {
-    const user = await User.findById(req.params._id);
+    const user = await User.findById(req.params._id)
+    .populate('following', '_id name')
+    .populate('followers', '_id name')
+
     if(user){
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
@@ -101,12 +104,6 @@ const getSingleuser = asyncHandler( async(req, res)=> {
 })
 
 
-const update = async(req, res, next ) => {
-
- 
-
-}
-
 
 const SignIn = asyncHandler(async(req, res)=> {
     const user = await User.findOne({email: req.body.email})
@@ -118,4 +115,62 @@ const SignIn = asyncHandler(async(req, res)=> {
 })
 
 
-module.exports = {createUser, readProfile, deleteUser, update, getSingleuser, listUsers, SignIn}
+const addFollowing = asyncHandler(async(req, res, next )=> {
+const user = await User.findByIdAndUpdate
+(req.body._id, {$push: {following: req.body.followId}})
+ if(user){
+    res.send(user)
+ } else {
+    res.status(400).send({message: 'could\'nt add followers'})
+ }
+})
+
+
+const addFollower = asyncHandler(async(req, res)=> {
+    const result = await User.findByIdAndUpdate
+    (req.body.followId, {$push: {followers: req.body._id}}, {new: true})
+    .populate('following', '_id name')
+    .populate('followers', '_id name')
+    if(result){
+        result.password = undefined
+        res.send(result)
+    } else {
+        res.status(400).send({message: 'could\'t retrive followers'})
+    }
+})
+
+const removeFollowing = asyncHandler(async(req, res)=> {
+    const user = await User.findByIdAndUpdate(req.body._id,
+        {$push: {following: req.body.unfollowId}}
+    ) 
+    if(user){
+        res.send(user)
+    } else {
+        res.status(404).send({message: 'could\'t remove following'})
+    }
+
+})
+
+const removeFollower = asyncHandler(async(req, res)=> {
+const user = await User.findByIdAndUpdate(req.body.unfollowId,
+    {$pull: {followers: req.body._id}},
+    {new: true}
+    )
+    .populate('following', '_id name')
+    .populate('following', '_id name')
+
+    if(user){
+        password = undefined,
+        res.send(user)
+    } else {
+        res.status(404).send({ message: 'couldn\'t remove user'})
+    }
+})
+
+module.exports = {
+    createUser, readProfile, 
+    deleteUser, addFollowing, 
+    getSingleuser, listUsers, 
+    SignIn, addFollower,
+    removeFollowing, removeFollower
+}

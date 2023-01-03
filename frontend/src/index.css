@@ -6,6 +6,13 @@
   justify-content: center;
 }
 
+.signupForm{
+  display: flex;
+  align-self: centre;
+  justify-content: center;
+  width: 100%;
+
+}
 /**welcome card css*/
 
 .welcomeCards{
