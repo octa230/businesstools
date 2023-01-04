@@ -7,6 +7,9 @@ import SignupUser from "./screens/welcomeScreen/SignupUser";
 import Dashboard from "./screens/user/Dashboard";
 import Profile from "./components/Profile";
 import Team from "./screens/user/Team";
+import Inventory from "./screens/user/Inventory";
+import CreateProduct from "./screens/admin/CreateProduct";
+import Post from "./components/Post";
 
 function App() {
   return (
@@ -19,7 +22,9 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />}/>
       <Route path="/profile" element={<Profile />}/>
       <Route path="/team" element={<Team />}/>
-      
+      <Route path="create-product" element={<CreateProduct />}/>
+      <Route path="inventory" element={<Inventory />} /> 
+      <Route path="post" element={<Post />}/>
     </Routes>
 
     </BrowserRouter>

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/editprofile.css'
+//import '../css/editprofile.css'
 import Container from 'react-bootstrap/esm/Container'
 import Button from 'react-bootstrap/esm/Button'
 import Form from 'react-bootstrap/esm/Form'

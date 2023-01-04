@@ -7,6 +7,7 @@ const userRouter = require('./routes/userRoutes')
 const postRouter = require('./routes/postRoutes')
 const productRouter = require('./routes/productRoutes')
 const followRouter = require('./routes/followRoutes')
+const expenseRouter = require('./routes/expenseRoutes')
 
 
 const port = 8000;
@@ -22,6 +23,7 @@ app.use('/api/users/', userRouter)
 app.use('/api/feed/', postRouter)
 app.use('/api/products/', productRouter)
 app.use('/api/follow/',followRouter )
+app.use('/api/expenses/', expenseRouter)
 
 
 

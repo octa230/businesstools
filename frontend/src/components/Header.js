@@ -12,8 +12,8 @@ export default function Header({title, link1, link2, link3, dropdown, dropdownLi
         <Navbar.Toggle aria-controls='responsive-navbar' />
         <Navbar.Collapse id='responsive-navbar'>
             <Nav className='me-auto'>
-                <Nav.Link>{link1}</Nav.Link>
-                <Nav.Link>{link2}</Nav.Link>
+                <Nav.Link href='inventory'>{link1}</Nav.Link>
+                <Nav.Link href='team'>{link2}</Nav.Link>
                 <Nav.Link href='/profile'>{link3}</Nav.Link>
                
                 <NavDropdown className='d-flex justify-content-end' title={dropdown} id='responsive-navbar-dropdown'>

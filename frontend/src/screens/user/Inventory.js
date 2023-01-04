@@ -6,7 +6,6 @@ import Product from '../../components/Product'
 
 export default function Inventory() {
   return (
-
     <>
     <Header 
     title={'Tools Dashboard'}
@@ -18,21 +17,36 @@ export default function Inventory() {
     dropdownLink2={'Add Expense'}
     dropdownLink3={'Edit Profile'}
     />
-    <Container>
+    <Container className='mt-3'>
         <Table borderless hover>
             <thead>
-                <tr>ID</tr>
-                <tr>Photo</tr>
-                <tr>Name</tr>
-                <tr>Code</tr>
-                <tr>Stock</tr>
-                <tr>Price</tr>
+                <tr>
+                <th>ID</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Stock</th>
+                <th>Price</th>
+                </tr>
             </thead>
             <tbody>
-                <td>01</td>
-                <td></td>
+                <tr>
+                  <td>01</td>
+                  <td>image</td>
+                  <td>product name</td>
+                  <td>sku code</td>
+                  <td>300</td>
+                  <td>5.00</td>
+                </tr>
+                <tr>
+                  <td>02</td>
+                  <td>image</td>
+                  <td>product name</td>
+                  <td>sku code</td>
+                  <td>700</td>
+                  <td>8.00</td>
+                </tr>
             </tbody>
-
         </Table>   
     </Container>
       

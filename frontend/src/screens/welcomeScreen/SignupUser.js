@@ -45,6 +45,10 @@ export default function SignupUser() {
                     <Form.Check type='switch' id='employee' label='Administrator'/>
                 </Form.Group>
             </Form.Group>
+            <Form.Group className='mb-3'>
+                <Form.Label>Photo: </Form.Label>
+                <Form.Control controlId='photo' type='file' />
+            </Form.Group>
             <Button variant='primary' type='submit'>Add employee</Button>
         </Form>
       

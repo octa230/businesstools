@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../../components/Header'
+import Container from 'react-bootstrap/esm/Container'
 
 export default function Team() {
   return (
@@ -14,7 +15,9 @@ export default function Team() {
     dropdownLink2={'Add Expense'}
     dropdownLink3={'Edit Profile'}
     />
-      
+      <Container fluid className='mt-4'> 
+        
+        </Container> 
     </>
   )
 }

@@ -13,6 +13,13 @@
   width: 100%;
 
 }
+.createProduct{
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 22px;
+}
 /**welcome card css*/
 
 .welcomeCards{
@@ -43,4 +50,18 @@
 .dashboard-center{
   border-left: 1px solid gainsboro;
   border-right: 1px solid gainsboro;
+}
+.formContainer{
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  width: 100%;
+
+}
+.form-img{
+  width: 68px;
+}
+
+.post-user{
+  color: teal;
 }
