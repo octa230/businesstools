@@ -5,6 +5,8 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const userRouter = require('./routes/userRoutes')
 const postRouter = require('./routes/postRoutes')
+const productRouter = require('./routes/productRoutes')
+const followRouter = require('./routes/followRoutes')
 
 
 const port = 8000;
@@ -16,11 +18,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
-
-
 app.use('/api/users/', userRouter)
 app.use('/api/feed/', postRouter)
-app.use('/api/follow', )
+app.use('/api/products/', productRouter)
+app.use('/api/follow/',followRouter )
 
 
 

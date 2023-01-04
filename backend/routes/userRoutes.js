@@ -1,10 +1,6 @@
 const express = require("express");
 const {
     createUser, 
-    removeFollower,
-    removeFollowing,
-    addFollower,
-    addFollowing,
     readProfile, 
     deleteUser, 
     getSingleuser, 

@@ -1,11 +1,17 @@
 const express = require('express')
+const{ 
+    removeFollower,
+    removeFollowing,
+    addFollower,
+    addFollowing,
+} = require('../controllers/userCtrl')
 
 const followRouter = express.Router()
 
 
-followRouter.put('/follow/', isAuth)
-.addFollower()
-.removeFollower()
-followRouter.put('/unfollow/', isAuth)
-.removeFollowing()
-.addFollowing()
+followRouter.put('/unfollow/', isAuth, removeFollower)
+followRouter.put('/follow', isAuth, addFollower)
+followRouter.put('/removefollowing/', isAuth, removeFollowing)
+followRouter.put('/addfollowing', addFollowing)
+
+module.exports = followRouter

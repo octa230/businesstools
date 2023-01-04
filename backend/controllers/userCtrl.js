@@ -67,7 +67,8 @@ const deleteUser = asyncHandler(async(req, res)=> {
 //read & user profile 
 
 const readProfile = asyncHandler(async(req, res)=> {
-    const user = await User.findById(req.body._id);
+    const profileId = req.params.id;
+    const user = await User.findById(profileId);
     if(user){
         user.name = req.body.name || user.name,
         user.email = req.body.name || user.name,
@@ -76,10 +77,9 @@ const readProfile = asyncHandler(async(req, res)=> {
         user.company = req.body.company || user.company,
         user.location = req.body.location || user.location,
         user.phone = req.body.phone || user.phone
-
-        if(req.user.password){
-            user.password = await bcrypt.hash(req.body.password, 10)
-        }
+        res.send(user)
+    }else{
+        res.status(404).send({message: 'profile unavailable' })
     }
    
 })

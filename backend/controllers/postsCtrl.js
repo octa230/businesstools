@@ -3,7 +3,8 @@ const Post = require('../models/postModel')
 
 
 const getAllPosts = asyncHandler(async()=>{
-
+ const posts = await Post.find()
+ res.send(posts)
 })
 
 const getUserPosts = asyncHandler(async()=>{
