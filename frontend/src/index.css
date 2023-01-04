@@ -33,3 +33,14 @@
   padding: 22px;
   text-decoration: none;
 }
+/* .dashboard{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+} */
+
+.dashboard-center{
+  border-left: 1px solid gainsboro;
+  border-right: 1px solid gainsboro;
+}

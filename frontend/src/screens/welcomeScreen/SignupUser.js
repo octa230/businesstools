@@ -11,29 +11,33 @@ export default function SignupUser() {
             <Form.Text>
                 <h1>Add New User</h1>
             </Form.Text>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='name'>
                 <Form.Label>Name: </Form.Label>
-                <Form.Control controlId='name' placeholder='Full Name' />
+                <Form.Control placeholder='Full Name' />
             </Form.Group>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='email' >
                 <Form.Label>Email: </Form.Label>
-                <Form.Control controlId='email' placeholder='email Address'/>
+                <Form.Control placeholder='email Address'/>
             </Form.Group>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='company'>
                 <Form.Label>Company: </Form.Label>
-                <Form.Control controlId='company' placeholder='Company'/>
+                <Form.Control placeholder='Company'/>
             </Form.Group>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='position'>
+                <Form.Label>Position: </Form.Label>
+                <Form.Control placeholder='Position'/>
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='location'>
                 <Form.Label>Area</Form.Label>
-                <Form.Control controlId='location' placeholder='location of operation'></Form.Control>
+                <Form.Control placeholder='location of operation'></Form.Control>
             </Form.Group>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='phone'>
                 <Form.Label>Phone</Form.Label>
-                <Form.Control controlId='phone' placeholder='phone number'></Form.Control>
+                <Form.Control placeholder='phone number'></Form.Control>
             </Form.Group>
-            <Form.Group className='mb-3'>
+            <Form.Group className='mb-3' controlId='password'>
                 <Form.Label>Create Password</Form.Label>
-                <Form.Control controlId='password' placeholder='create password'></Form.Control>
+                <Form.Control placeholder='create password'></Form.Control>
             </Form.Group>
             <Form.Group className='mb-3'>
                 <Form.Label>Role</Form.Label>

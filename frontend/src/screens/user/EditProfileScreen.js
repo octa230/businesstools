@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/esm/Button'
 import Form from 'react-bootstrap/esm/Form'
 import Image  from 'react-bootstrap/Image'
 import {ArrowBarUp} from 'react-bootstrap-icons'
+import Header from '../../components/Header'
 
 export default function EditProfileScreen() {
 
@@ -13,6 +14,18 @@ export default function EditProfileScreen() {
     let userData = new FormData() 
   }
   return (
+    <>
+     <Header 
+    title={'Tools Dashboard'}
+    link1={'invetory'}
+    link2={'Team'}
+    link3={'Profile'}
+    dropdown={'Account'}
+    dropdownLink1={'Sign Out'}
+    dropdownLink2={'Add Expense'}
+    dropdownLink3={'Edit Profile'}
+    />
+    
     <Container fluid className='formContainer' sm={6} lg={8}>
      
      <Form className='py-4'>    
@@ -53,5 +66,6 @@ export default function EditProfileScreen() {
         <Button variant='primary' type='submit'>Update</Button>
       </Form>
     </Container>
+    </>
   )
 }
