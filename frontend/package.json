@@ -9,11 +9,13 @@
     "axios": "^1.2.2",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.2.3",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-bootstrap-icons": "^1.10.2",
     "react-create-context": "^1.0.2",
     "react-dom": "^18.2.0",
+    "react-google-charts": "^4.0.0",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

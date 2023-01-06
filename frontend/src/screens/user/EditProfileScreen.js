@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/esm/Form'
 import Image  from 'react-bootstrap/Image'
 import {ArrowBarUp} from 'react-bootstrap-icons'
 import Header from '../../components/Header'
+import { ArrowLeft } from 'react-bootstrap-icons'
 
 export default function EditProfileScreen() {
 
@@ -30,7 +31,14 @@ export default function EditProfileScreen() {
      
      <Form className='py-4'>    
         <Form.Text className='text-muted p-4'>
-        <h1 className='p-6'>Edit Profile</h1> 
+        <h1 className='p-6'>
+          <span >
+          <Button href='/profile' variant='light'>
+            <ArrowLeft />
+          </Button>
+          </span>
+          Edit Profile
+          </h1> 
           </Form.Text>    
         <Image className='rounded form-img' 
         src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg

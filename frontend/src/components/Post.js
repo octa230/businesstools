@@ -11,7 +11,7 @@ export default function Post() {
       
       <Card.Body>
         <Card.Header className='post-user' as='h5'>@Administrator</Card.Header>
-          <Card.Subtitle className='mt-3'>Company</Card.Subtitle>
+          <Card.Subtitle className='mt-3'>Company: Floral Story</Card.Subtitle>
         <Card.Subtitle className='mt-3'>post header</Card.Subtitle>
         <Card.Text className='mt-2'>
           It helps the designer plan where the content will sit. 
@@ -31,10 +31,11 @@ export default function Post() {
 
           <InputGroup className='mb-3'>
             <Form.Control
+            as='textarea'
             placeholder='Add comment' 
             aria-describedby='submitBtn'
             />
-            <InputGroup.Text id='submitBtn'>Post</InputGroup.Text>
+            <Button variant='outline-secondary'>post comment</Button>
 
           </InputGroup>
         </ListGroup.Item>

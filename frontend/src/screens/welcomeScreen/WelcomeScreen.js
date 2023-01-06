@@ -7,8 +7,8 @@ export default function WelcomeScreen() {
 
     const Screens = [
     {name: 'Dashboard', url: '/dashboard', icon: 'https://iconarchive.com/download/i109781/inipagi/job-seeker/id-card.ico', text:'Go to welcome screen'}, 
-    {name: 'Inventory', url: '/', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYkOpWrlF445PxbidxpGCLYl5g02CctGAuRw&usqp=CAU', text: 'Go to Inventory Section'}, 
-    {name: 'Admin', url: '/', icon: 'https://iconarchive.com/download/i109781/inipagi/job-seeker/id-card.ico', text: 'Go to Admin login'}, 
+    {name: 'Inventory', url: '/inventory', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYkOpWrlF445PxbidxpGCLYl5g02CctGAuRw&usqp=CAU', text: 'Go to Inventory Section'}, 
+    {name: 'Admin', url: '/statistics', icon: 'https://iconarchive.com/download/i109781/inipagi/job-seeker/id-card.ico', text: 'Go to Admin login'}, 
     {name: 'Employees', url: '/profiles', icon: 'https://iconarchive.com/download/i109781/inipagi/job-seeker/id-card.ico', text: 'See Employee Stat'},
     {name: 'Information Bot', url: '/', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYkOpWrlF445PxbidxpGCLYl5g02CctGAuRw&usqp=CAU', text: 'See Timeline '},
     //{name: 'Chat environment', url: '/socialbot/', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYkOpWrlF445PxbidxpGCLYl5g02CctGAuRw&usqp=CAU', text: 'Go to chat enviroment'},

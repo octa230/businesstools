@@ -18,7 +18,7 @@ export default function Header({title, link1, link2, link3, dropdown, dropdownLi
                
                 <NavDropdown className='d-flex justify-content-end' title={dropdown} id='responsive-navbar-dropdown'>
                     <NavDropdown.Item>{dropdownLink1}</NavDropdown.Item>
-                    <NavDropdown.Item>{dropdownLink2}</NavDropdown.Item>
+                    <NavDropdown.Item href='add-expense'>{dropdownLink2}</NavDropdown.Item>
                     <NavDropdown.Item href='/edit-profile'>{dropdownLink3}</NavDropdown.Item>                  
                 </NavDropdown>            
             </Nav>

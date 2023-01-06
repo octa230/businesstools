@@ -7,6 +7,7 @@ import Image from 'react-bootstrap/esm/Image';
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button';
 import Header from './Header';
+import { PencilFill } from 'react-bootstrap-icons';
 
 export default function Profile(props) {
   return (
@@ -27,7 +28,13 @@ export default function Profile(props) {
         <Col xs={12} md={3}>
             <Image className='rounded form-img' src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg
         ?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='/>
-        <span>Employee Name</span>
+        <span>Employee Name 
+        <Button variant='' href='/edit-profile'>
+            <PencilFill />
+            </Button>
+        </span>
+        <span>
+        </span>
         </Col>
         <Col xs={12} md={5}>
             <p>About user/ user description</p>
