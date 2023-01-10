@@ -10,9 +10,9 @@ const followRouter = require('./routes/followRoutes')
 const expenseRouter = require('./routes/expenseRoutes')
 
 
-const port = 8000;
-const app = express()
 dotenv.config()
+const app = express()
+
 
 
 app.use(express.json())
@@ -28,10 +28,10 @@ app.use('/api/expenses/', expenseRouter)
 
 
 mongoose.connect(process.env.mongodb_uri)
-.then(()=>{
+.then(()=> {
     console.log('connected to db')
 })
-.catch((err) =>{
+.catch((err)=> {
     console.log(err.message)
 })
 
@@ -46,6 +46,8 @@ app.use((err, req, res, next) => {
         console.log(err)
     }
 })
+
+const port = process.env.PORT
 
 app.listen(port, ()=>{
     console.log(`app running on ${port}`)

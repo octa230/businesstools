@@ -1,8 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Expense = require('../models/expenseModel')
 const extend = require('just-extend')
-const { default: mongoose } = require('mongoose')
-
+const mongoose = require('mongoose')
 
 const createExpense = asyncHandler(async(req, res)=> {
 req.body.recordedBy = req.auth._id

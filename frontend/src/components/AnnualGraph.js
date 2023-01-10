@@ -6,7 +6,7 @@ import { Chart } from "react-google-charts";
 
 
 
-export function MonthlyGraph() {
+export function AnnualGraph() {
     const data = [
         ["Year", "Sales", "Expenses", "Profit"],
         ["2014", 1000, 400, 200],
@@ -22,7 +22,7 @@ export function MonthlyGraph() {
       };
   return (
    <Card>
-    <Card.Title>Monthly Insight</Card.Title>
+    <Card.Title>Annual Insight</Card.Title>
      <Chart
       chartType="Bar"
       width="100%"

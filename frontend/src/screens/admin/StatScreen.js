@@ -3,12 +3,16 @@ import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/esm/Row'
 import MonthExpense from '../../components/MonthExpense'
-import { MonthlyGraph } from '../../components/MonthlyGraph'
+import { AnnualGraph } from '../../components/AnnualGraph'
 import Header from '../../components/Header'
+import { Helmet } from 'react-helmet-async'
 
 export default function StatScreen() {
   return (
     <>
+    <Helmet>
+        <title>Insights</title>
+    </Helmet>
        <Header 
     title={'Tools Dashboard'}
     link1={'invetory'}
@@ -23,7 +27,7 @@ export default function StatScreen() {
         <Row>
             <Col xs={12} md={2}> col-1</Col>
             <Col xs={12} md={6}> 
-            <MonthlyGraph />
+            <AnnualGraph />
             </Col>
             <Col xs={12} md={4}>
                 <MonthExpense />

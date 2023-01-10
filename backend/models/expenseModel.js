@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const expenseModel = new mongoose.Scheme({
+const expenseModel = new mongoose.Schema({
 
     title:{type: String, required: true, trim: true},
     image:{type: String, required: true},
@@ -15,5 +15,5 @@ const expenseModel = new mongoose.Scheme({
 })
 
 
-const Expense = mongoose.Model('Expense', expenseModel)
+const Expense = mongoose.model('Expense', expenseModel)
 module.exports = Expense

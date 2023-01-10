@@ -20,4 +20,4 @@ if(authorizaton){
 }
 }
 
-module.exports = {isAuth}
+module.exports = isAuth

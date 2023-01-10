@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Image from 'react-bootstrap/esm/Image';
@@ -8,10 +7,16 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/esm/Button';
 import Header from './Header';
 import { PencilFill } from 'react-bootstrap-icons';
+import { Helmet } from 'react-helmet-async';
 
 export default function Profile(props) {
+
+
   return (
     <>
+    <Helmet>
+      <title>profile</title>
+    </Helmet>
     <Header 
     title={'Tools Dashboard'}
     link1={'invetory'}
@@ -46,18 +51,7 @@ export default function Profile(props) {
                 <ListGroup.Item>Location</ListGroup.Item>
                 <ListGroup.Item>Position</ListGroup.Item>
                 <ListGroup.Item>Phone</ListGroup.Item>
-                <ListGroup.Item>Join Date</ListGroup.Item>
-         {/*        <ListGroup.Item>
-                    <Row>
-                    <Col xs={8} md={6} className='p-2'>
-                    <Button>Follow</Button>
-                    </Col>
-                    <Col className='p-2'>
-                    <Button>UnFollow</Button>
-                    </Col>
-
-                    </Row>
-                </ListGroup.Item>     */}                
+                <ListGroup.Item>Join Date</ListGroup.Item>         
             </ListGroup>
         </Col>
       </Row>

@@ -2,15 +2,30 @@ import { createContext, useReducer } from "react";
 
 export const Store =  createContext()
 
-const initialState ={
+const initialState = {
+
+    menubox: false,
+    userInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null
+
 
 }
 
 function reducer(state, action){
     switch (action.type) {
-        case value:
-            
-            break;
+        case 'SET_MENU_ON': 
+            return {...state, menubox: true}
+        case 'SET_MENU_OFF':
+            return {...state, menubox: false}
+        case 'SIGN_IN':
+            return {...state, userInfo: action.payload}
+        case 'SIGN_OUT':
+            return {
+                ...state,
+                userInfo: null,
+
+            }
     
         default:
             return state;

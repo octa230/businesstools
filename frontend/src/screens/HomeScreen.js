@@ -2,10 +2,15 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { Helmet } from 'react-helmet-async'
 
 
 export default function HomeScreen() {
   return (
+    <>
+    <Helmet>
+      <title>Log-in</title>
+    </Helmet>
 
     <Container className='homeForm'>
           <Form>
@@ -22,5 +27,6 @@ export default function HomeScreen() {
                 <Button variant='primary' type='submit'>submit</Button>
             </Form>
     </Container>
+    </>
   )
 }

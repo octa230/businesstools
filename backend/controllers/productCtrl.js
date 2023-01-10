@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const express = require('express')
 const Product = require('../models/productModel')
-const { default: Product } = require('../models/productModel')
 
 
 //getAll Products
@@ -80,7 +79,7 @@ const AdminGetProducts = asyncHandler(async(req, res) =>{
     });
 })
 
-const getCategories = asyncHandler(async()=>{
+const getCategories = asyncHandler(async(req, res)=>{
     const categories = await Product.find().distinct('category')
     res.send(categories)
 })
