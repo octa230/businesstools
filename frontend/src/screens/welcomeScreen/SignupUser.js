@@ -121,7 +121,7 @@ export default function SignupUser() {
 
             <Form.Group className='mb-3' controlId='role'>
                 <Form.Label>Role</Form.Label>
-                <Form.Group onChange={(e)=> setRole(e.value = true)} type='checkbox'>
+                <Form.Group onChange={(e)=> setRole(e.value.target)} type='checkbox'>
                     <Form.Check type='switch' id='employee' label='Administrator'/>
                 </Form.Group>
             </Form.Group>

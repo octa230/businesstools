@@ -17,10 +17,10 @@ const UserRouter = express.Router()
 
 UserRouter.post('/register', createUser)
 UserRouter.get('/listusers/', listUsers)
-UserRouter.delete('/delete user/', isAuth, isAdmin, deleteUser);
-UserRouter.get('/api/users/:id/', isAuth, getSingleuser)
-UserRouter.put('/profile/', isAuth, readProfile)
-UserRouter.post('/signin/', SignIn)
+UserRouter.delete('/deleteuser', isAuth, isAdmin, deleteUser);
+UserRouter.get('/:_id', getSingleuser)
+UserRouter.put('/profile', readProfile)
+UserRouter.post('/signin', SignIn)
 
 
 

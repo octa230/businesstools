@@ -13,12 +13,12 @@ const asyncHandler = require('express-async-handler');
 const createUser = asyncHandler(async (req, res)=> {
 
         
-   hashedPassword = bcrypt.hash(req.body.password, 10, (err, hashedPassword) =>{
+/*    hashedPassword = bcrypt.hash(req.body.password, 10, (err, hashedPassword) =>{
         hashedPassword
     })
-
+ */
 const newUser = new User({
-  
+    
     name: req.body.name, 
     email: req.body.email, 
     position: req.body.position, 
@@ -50,7 +50,7 @@ const listUsers = asyncHandler (async(req, res)=> {
 })
 
 const deleteUser = asyncHandler(async(req, res)=> {
-   const user = await User.findById(req.params.id);
+   const user = await User.findById(req.params._id);
    if(user){
     if(user.email === "admin@floralstory.com"){
         res.status(400).send({message: "Can\'t delete root user"});
@@ -67,16 +67,9 @@ const deleteUser = asyncHandler(async(req, res)=> {
 //read & user profile 
 
 const readProfile = asyncHandler(async(req, res)=> {
-    const profileId = req.params.id;
+    const profileId = req.params._id;
     const user = await User.findById(profileId);
     if(user){
-        user.name = req.body.name || user.name,
-        user.email = req.body.name || user.name,
-        user.role = req.body.role || user.role,
-        user.position = req.body.position || user.position,
-        user.company = req.body.company || user.company,
-        user.location = req.body.location || user.location,
-        user.phone = req.body.phone || user.phone
         res.send(user)
     }else{
         res.status(404).send({message: 'profile unavailable' })
@@ -109,7 +102,7 @@ const SignIn = asyncHandler(async(req, res)=> {
     const user = await User.findOne({email: req.body.email})
     if(user){
         if(bcrypt.compareSync(req.body.password, user.password)){
-            res.send(user)
+            res.send({user, token: generateToken(user)})
         }
     }
 })

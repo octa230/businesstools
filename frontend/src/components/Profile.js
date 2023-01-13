@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useReducer, useRef, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/esm/Row';
+import { getError } from '../utils';
+import { Store } from '../Store';
 import Col from 'react-bootstrap/esm/Col';
 import Image from 'react-bootstrap/esm/Image';
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -8,8 +10,58 @@ import Button from 'react-bootstrap/esm/Button';
 import Header from './Header';
 import { PencilFill } from 'react-bootstrap-icons';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
+import Axios from 'axios';
+//import { toast } from 'react-toastify';
+
+
+function reducer(state, action){
+  switch(action.type){
+    case'REFRESH_PROFILE':
+      return {...state, profile: action.payload}
+    case 'CREATE_REQUEST':
+      return {...state, laodingcreateComment: true}
+    case 'REQUEST_SUCCESS':
+      return {...state, laodingcreateComment: false}
+    case 'CREATE_FAIL':
+      return {...state, laodingcreateComment: false}
+    case 'FETCH_REQUEST':
+      return {...state, loading: true}
+    case 'FETCH_SUCCESS':
+      return {...state, profile: action.payload, loading: false}
+    case 'FETCH_FAIL':
+      return {...state, loading:false, error: action.payload}
+    default:
+      return state
+  }
+}
+
+
+
+
 
 export default function Profile(props) {
+
+  let commentsRef = useRef()
+
+  const[comment, setComment] = useState(0);
+  const[selectMonth, setSelectedMonth ] = useState('')
+
+  const navigate = useNavigate()
+  const params = useParams()
+  const {_id: profileId} = params
+
+ 
+  const {state } = useContext(Store)
+  const {userInfo} = state
+
+/*   const [{ loading, error, user, loadingCreateReview }, dispatch] =
+  useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
+ */
+
 
 
   return (
@@ -42,16 +94,16 @@ export default function Profile(props) {
         </span>
         </Col>
         <Col xs={12} md={5}>
-            <p>About user/ user description</p>
+            <p>{`${data.name}'s profile`}</p>
         </Col>
         <Col xs={12} md={4}>
             <ListGroup>
-                <ListGroup.Item>user@email.com</ListGroup.Item>
-                <ListGroup.Item>Company</ListGroup.Item>
-                <ListGroup.Item>Location</ListGroup.Item>
-                <ListGroup.Item>Position</ListGroup.Item>
-                <ListGroup.Item>Phone</ListGroup.Item>
-                <ListGroup.Item>Join Date</ListGroup.Item>         
+                <ListGroup.Item>{data.email}</ListGroup.Item>
+                <ListGroup.Item>{data.company}</ListGroup.Item>
+                <ListGroup.Item>{data.location}</ListGroup.Item>
+                <ListGroup.Item>{data.position}</ListGroup.Item>
+                <ListGroup.Item>{data.phone}</ListGroup.Item>
+                <ListGroup.Item>{data.createdAt}</ListGroup.Item>         
             </ListGroup>
         </Col>
       </Row>

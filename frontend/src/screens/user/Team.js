@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../components/Header'
+import axios from 'axios'
 import Container from 'react-bootstrap/esm/Container'
 
 export default function Team() {
+
+
   return (
     <>
      <Header 
