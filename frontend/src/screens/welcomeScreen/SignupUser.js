@@ -24,7 +24,7 @@ export default function SignupUser() {
     const [company, setCompany] = useState('')
     const [role, setRole] = useState('')
     const [position, setPosition ] = useState('')
-    const [area, setArea] = useState('')
+    const [location, setLocation] = useState('')
     const [phone, setPhone] = useState('')
     const [photo, setPhoto] = useState('')
     const [ConfirmPassword, setcomfirmPassword] = useState('')
@@ -46,7 +46,7 @@ export default function SignupUser() {
            name,phone,
            email,photo,
            password,
-           company, role, position, area,
+           company, role, position, location,
         });
 
         ctxDispatch({type: 'SIGN_IN', payload: data})
@@ -102,7 +102,7 @@ export default function SignupUser() {
             </Form.Group>
             <Form.Group className='mb-3' controlId='location'>
                 <Form.Label>Area</Form.Label>
-                <Form.Control onChange={(e) => setArea(e.target.value)} placeholder='location of operation' />
+                <Form.Control onChange={(e) => setLocation(e.target.value)} placeholder='location of operation' />
             </Form.Group>
             <Form.Group className='mb-3' controlId='phone'>
                 <Form.Label>Phone</Form.Label>
@@ -117,13 +117,6 @@ export default function SignupUser() {
             <Form.Group className='mb-3' controlId='ConfirmPassword'>
                 <Form.Label>Comfirm Password</Form.Label>
                 <Form.Control onChange={(e)=> setcomfirmPassword(e.target.value)} placeholder='confirm password' />
-            </Form.Group>
-
-            <Form.Group className='mb-3' controlId='role'>
-                <Form.Label>Role</Form.Label>
-                <Form.Group onChange={(e)=> setRole(e.value.target)} type='checkbox'>
-                    <Form.Check type='switch' id='employee' label='Administrator'/>
-                </Form.Group>
             </Form.Group>
             <Form.Group className='mb-3' controlId='photo'>
                 <Form.Label>Photo: </Form.Label>

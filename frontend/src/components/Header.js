@@ -5,13 +5,14 @@ import NavDropdown from 'react-bootstrap/esm/NavDropdown';
 import Container from 'react-bootstrap/esm/Container';
 import { Store } from '../Store';
 
-export default function Header({title, link1, link2, link3, dropdown, dropdownLink1, dropdownLink2, dropdownLink3 }){
+export default function Header({title, link1, link2, link3, link4, dropdown, dropdownLink1, dropdownLink2, dropdownLink3 }){
 
   const {state, dispatch: ctxDispatch} = useContext(Store)
+  const {userInfo} = state
 
   function signOutHandler(){
     ctxDispatch({type: 'SIGN_OUT'})
-    localStorage.removeItem('userInfo');
+    localStorage.clear('userInfo');
     window.location.href='/' 
   }
 
@@ -25,6 +26,7 @@ export default function Header({title, link1, link2, link3, dropdown, dropdownLi
                 <Nav.Link href='/inventory'>{link1}</Nav.Link>
                 <Nav.Link href='/team'>{link2}</Nav.Link>
                 <Nav.Link href='/profile'>{link3}</Nav.Link>
+                <Nav.Link href='/create-product'>{link4}</Nav.Link>
                
                 <NavDropdown className='d-flex justify-content-end' title={dropdown} id='responsive-navbar-dropdown'>
                     <NavDropdown.Item onClick={signOutHandler}>{dropdownLink1}</NavDropdown.Item>

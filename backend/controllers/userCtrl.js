@@ -12,17 +12,11 @@ const asyncHandler = require('express-async-handler');
 //create new user
 const createUser = asyncHandler(async (req, res)=> {
 
-        
-/*    hashedPassword = bcrypt.hash(req.body.password, 10, (err, hashedPassword) =>{
-        hashedPassword
-    })
- */
 const newUser = new User({
     
     name: req.body.name, 
     email: req.body.email, 
     position: req.body.position, 
-    role: req.body.role, 
     company: req.body.company, 
     location: req.body.location, 
     phone: req.body.phone,
@@ -34,7 +28,11 @@ const newUser = new User({
     _id: user._id,
     name: user.name,
     email: user.email,
-    role: user.role,
+    location: user.location,
+    company: user.company,
+    position: user.position,
+    createdAt: user.createdAt,
+    phone: user.phone,
     token: generateToken(user)
 })
 });
@@ -102,9 +100,22 @@ const SignIn = asyncHandler(async(req, res)=> {
     const user = await User.findOne({email: req.body.email})
     if(user){
         if(bcrypt.compareSync(req.body.password, user.password)){
-            res.send({user, token: generateToken(user)})
+            res.send({
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                location: user.location,
+                company: user.company,
+                phone: user.phone,
+                position: user.position,
+                createdAt: user.createdAt,  
+                token: generateToken(user)
+            })
+            return
         }
     }
+    res.status(401).send({ message: "Invalid email or password" });
+
 })
 
 

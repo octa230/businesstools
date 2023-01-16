@@ -1,14 +1,43 @@
-import React from 'react'
+import { useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Header  from '../../components/Header'
 import Row from 'react-bootstrap/Row'
+import axios from 'axios'
+import { getError } from '../../utils'
+import { toast } from 'react-toastify'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel'
 import Post from '../../components/Post'
 import User from '../../components/User'
+import Button from 'react-bootstrap/esm/Button'
 
 export default function Dashboard() {
+
+
+    const [posts, setPosts] = useState('')
+
+    const makePost = async(e)=> {
+       
+        const post = await axios.post('/api/feed/posts/new', )
+        try{
+            if(!post.text){
+                toast.error(getError('Add text'))
+            } 
+
+        } catch (err) {
+        toast.error(getError(err))
+    }}
+    
+
+    function addPost(post){
+        const updatedPosts = [...posts];
+        updatedPosts.unshift(post)
+        setPosts(updatedPosts)
+      }
+    
+
+
   return (
     <>
     <Header 
@@ -34,8 +63,11 @@ export default function Dashboard() {
     <h1>Make Post</h1>
 </Form.Text>
                 <FloatingLabel>
-                    <Form.Control as='textarea' placeholder='make post' style={{height:'100px'}} />                    
+                    <Form.Control as='textarea' placeholder='make post' 
+                    style={{height:'100px'}} />
+                    <Button onClick={addPost} className='d-flex mt-3'>Make post</Button>                    
                 </FloatingLabel><br />
+                
 <Form.Text>
     <h5>Write Broadcast or General message</h5>
 </Form.Text>
@@ -44,7 +76,8 @@ export default function Dashboard() {
                 lable='Make broadcast'
                 className='mb-3'
                 >
-                <Form.Control as='textarea' placeholder='Make general post'/>
+                <Form.Control controlId='text' as='textarea' placeholder='Make general post'/>
+                <Button onClick={makePost} variant='success' className='d-flex mt-3'>send post</Button>  
                     
                 </FloatingLabel>
                 <Post />
@@ -56,7 +89,6 @@ export default function Dashboard() {
                 <Form.Text>
                 <h1>Following</h1>
                 </Form.Text>
-                <User />
                 <User />
             </Col>
         </Row>

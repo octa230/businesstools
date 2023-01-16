@@ -13,6 +13,7 @@ export default function Inventory() {
     link1={'invetory'}
     link2={'Team'}
     link3={'Profile'}
+    link4={'create product'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}

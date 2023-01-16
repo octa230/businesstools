@@ -5,8 +5,6 @@ const commentSchema = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now},
     postedBy: {type: mongoose.Schema.ObjectId, ref: 'User'}
 },
-
-
 {
     timestamps: true
 }
