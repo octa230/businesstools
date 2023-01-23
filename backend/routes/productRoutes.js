@@ -1,6 +1,6 @@
 const express = require('express')
-const isAuth = require('../helpers/isAdmin')
-const isAdmin = require('../helpers/isAuth')
+const {isAuth} = require('../helpers/isAuth')
+const {isAdmin} = require('../helpers/isAuth')
 const {
     getAll, AdminGetProducts, 
     getCategories, deleteProduct, 

@@ -8,7 +8,6 @@ import ListGroup from 'react-bootstrap/esm/ListGroup'
 import Button from 'react-bootstrap/esm/Button'
 import Text from 'react-bootstrap/esm/FormText'
 import Image from 'react-bootstrap/esm/Image'
-import { Store } from '../Store'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { getError } from '../utils'
@@ -63,7 +62,7 @@ export default function User() {
     return (
     <Container fluid className='mt-4'>
       {users.map((user) => (
-      <Row className='mt-4'>
+      <Row className='mt-4' key={user._id}>
         <Col xs ={12} md={3}>
         <Image className='rounded form-img' 
         src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg

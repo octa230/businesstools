@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Header  from '../../components/Header'
 import Row from 'react-bootstrap/Row'
@@ -11,31 +11,33 @@ import FloatingLabel from 'react-bootstrap/esm/FloatingLabel'
 import Post from '../../components/Post'
 import User from '../../components/User'
 import Button from 'react-bootstrap/esm/Button'
+import { Store } from '../../Store'
 
 export default function Dashboard() {
 
 
-    const [posts, setPosts] = useState('')
+const [posts, newPost] = useState('')
+const [text, setText] = useState('')
 
-    const makePost = async(e)=> {
-       
-        const post = await axios.post('/api/feed/posts/new', )
-        try{
-            if(!post.text){
-                toast.error(getError('Add text'))
-            } 
+const {state, dispatch: ctxDispatch} = useContext(Store)
+const {userInfo} = state
 
-        } catch (err) {
+
+
+const makePost =  async(e) => {
+    e.preventDefault()
+    if(!text){
+        toast.error('please add text to your post')
+    }
+    try{
+        const {post} = await axios.post('/api/feed/posts/new', {text})
+
+        ctxDispatch({type: 'MAKE_POST', payload: post})
+    } catch (err) {
         toast.error(getError(err))
-    }}
-    
+    }
 
-    function addPost(post){
-        const updatedPosts = [...posts];
-        updatedPosts.unshift(post)
-        setPosts(updatedPosts)
-      }
-    
+}
 
 
   return (
@@ -63,25 +65,25 @@ export default function Dashboard() {
     <h1>Make Post</h1>
 </Form.Text>
                 <FloatingLabel>
-                    <Form.Control as='textarea' placeholder='make post' 
+                    <Form.Control as='textarea' placeholder='make post' onChange={(e)=> setText(e.target.value)}
                     style={{height:'100px'}} />
-                    <Button onClick={addPost} className='d-flex mt-3'>Make post</Button>                    
+                    <Button onClick={makePost} className='d-flex mt-3'>Make post</Button>                    
                 </FloatingLabel><br />
                 
 <Form.Text>
     <h5>Write Broadcast or General message</h5>
 </Form.Text>
                 <FloatingLabel
-                controlId='makepost'
+                
                 lable='Make broadcast'
                 className='mb-3'
                 >
-                <Form.Control controlId='text' as='textarea' placeholder='Make general post'/>
+                <Form.Control as='textarea' 
+                placeholder='Make general post'
+                onChange={(e)=> setText(e.target.value)}/>
                 <Button onClick={makePost} variant='success' className='d-flex mt-3'>send post</Button>  
                     
                 </FloatingLabel>
-                <Post />
-                <Post />
                 <Post />
 
             </Col>

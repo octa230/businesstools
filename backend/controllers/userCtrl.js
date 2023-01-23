@@ -1,7 +1,6 @@
 
-/* const isAuth = require('../helpers/isAuth')
-const isAdmin = require('../helpers/isAdmin') */
-const generateToken = require('../helpers/generateToken')
+
+const {generateToken} = require('../helpers/isAuth')
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler');

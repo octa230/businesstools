@@ -26,7 +26,9 @@ function reducer(state, action){
                 userInfo: null,
 
             }
-    
+        
+        case 'MAKE_POST':
+            return {...state, posts: action.payload}
         default:
             return state;
     }

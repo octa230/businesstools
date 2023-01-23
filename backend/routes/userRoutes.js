@@ -8,8 +8,8 @@ const {
     listUsers
 } = require ("../controllers/userCtrl");
 
-const  isAuth = require("../helpers/isAuth");
-const { isAdmin } = require("../helpers/isAdmin");
+const  {isAuth } = require("../helpers/isAuth");
+const { isAdmin } = require("../helpers/isAuth");
 const User = require("../models/userModel");
 
 

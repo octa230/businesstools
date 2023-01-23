@@ -1,7 +1,7 @@
 const express = require('express')
 const{createExpense, listByuser, updateExpense, deleteExpense} = require('../controllers/ExpenseCtrl')
-const isAuth = require('../helpers/isAuth')
-const generateToken = require('../helpers/generateToken')
+const {isAuth} = require('../helpers/isAuth')
+const {generateToken} = require('../helpers/isAuth')
 
 
 

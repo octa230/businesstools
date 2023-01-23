@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/esm/Row';
-//import { getError } from '../utils';
 import { Store } from '../Store';
 import Col from 'react-bootstrap/esm/Col';
 import Image from 'react-bootstrap/esm/Image';
@@ -12,8 +11,6 @@ import Header from './Header';
 import { PencilFill } from 'react-bootstrap-icons';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
-//import Axios from 'axios';
-//import { toast } from 'react-toastify';
 
 
 function reducer(state, action){
@@ -54,16 +51,7 @@ export default function Profile(props) {
 
  
   const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo} = state
-
-/*   const [{ loading, error, user, loadingCreateReview }, dispatch] =
-  useReducer(reducer, {
-    loading: true,
-    error: '',
-  });
- */
-
-
+  const {userInfo} = state;
 
   return (
     <>

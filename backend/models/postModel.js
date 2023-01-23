@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-
+const {Schema} = require('mongoose')
+ 
 const commentSchema = new mongoose.Schema({
     text: String,
     createdAt: {type: Date, default: Date.now},
@@ -21,11 +22,11 @@ const postModel = new mongoose.Schema({
         data: Buffer,
         contentType: String
     },
-    postedBy:{
-        type: mongoose.Schema.ObjectId, 
-        ref: 'User'
-     },
-     createdAt:{
+    postedBy: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
+    },
+    createdAt:{
         type: Date,
         default: Date.now
      },
