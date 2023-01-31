@@ -31,6 +31,6 @@ try {
 return output
 }
 
-exports.default = {getErrMsg, getuniqueErrMsg}
+module.exports = {getErrMsg, getuniqueErrMsg}
 
 

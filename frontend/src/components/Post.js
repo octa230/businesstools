@@ -1,7 +1,6 @@
-import React, {useReducer, useContext, useEffect } from 'react'
+import React, {useReducer, useContext, useEffect, useState } from 'react'
 import Card from 'react-bootstrap/esm/Card'
 import { Store } from '../Store'
-import { useState } from 'react'
 import { getError } from '../utils'
 import axios from 'axios'
 import {toast} from 'react-toastify'
@@ -10,7 +9,7 @@ import Form from 'react-bootstrap/esm/Form'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
 import Button from 'react-bootstrap/esm/Button'
 import { Trash } from 'react-bootstrap-icons'
-import {moment} from 'moment'
+import { useParams } from 'react-router-dom'
 
 
 
@@ -28,14 +27,14 @@ const reducer = (state, action) => {
       return {...state, loading: true, successDelete: false};
     case 'DELETE_SUCCESS':
       return {...state, loadingDelete: false, successDelete: true};
-    case 'DELETE_RESET':
+    case 'DELETE_FAIL':
       return {...state, loadingDelete: false, successDelete: false};
     case 'MAKE_POST':
       return {...state, loadingPost: true, postSuccess: false};
     case 'POST_SUCCESS':
       return {...state, loadingPost: false, postSuccess: true}
     case 'POST_FAIL':
-      return {...state, loadingPost: false, postSuccess: false, error: action.payload}
+      return {...state, loadingPost: false, postSuccess: false}
     case 'REFRESH_POST':
       return {...state, loadingPost: true }
     default:
@@ -45,12 +44,16 @@ const reducer = (state, action) => {
 
 export default function Post() {
 
+  
+  const[comments, addComment] = useState()
 
   function formatDate(date){
      return date = new Date().toLocaleTimeString()
   }
 
-  const [{ loading, error, posts, loadingDelete, successDelete }, dispatch] = useReducer(reducer, {
+
+  const [{ error, posts,  successDelete, loading }, dispatch] = 
+  useReducer(reducer, {
     posts:[],
     loading: true,
     error: '',
@@ -72,52 +75,28 @@ export default function Post() {
           toast.error(getError(error))
         }
       }
-      if(successDelete){
-        dispatch({type: 'DELETE_RESET'})
-      } else {
         fetchPosts()
-      }
-    }, [userInfo, successDelete])
+    }, [userInfo, posts, error, successDelete])
 
+  function removePost(){
 
+  }
 
-    const removePost = async (post) => {
-      if(window.confirm('You want toDelete post this post?')){
-        try{
-          dispatch({type: 'DELETE_REQUEST'});
-          await axios.delete(`/api/feed/posts/delete/${post._id}`,
-          
-          )
-          toast.success(getError('post deleted successfully'))
-          dispatch({type: 'DELETE_SUCCESS'})
-        
-        } catch(err){
-          toast.error(getError(err))
-          dispatch({type: 'DELETE_FAIL'})
-        } 
-      }
-    }
-    const addComment = async()=> {
-      const post = await axios.get('/api/')
-      if(post){
-        const comment = await axios.post(`/api/posts/${post._id}/comment`)
-      }
-    }
   return (
     <>
-    {posts.map((post)=> (
-      <Card border='light' className='mt-4 mb-4' key={post._id}>  
+    {posts.map((x)=> (
+      <Card border='light' className='mt-4 mb-4' key={x._id}>  
       <Card.Body>
-        <Card.Header className='post-user' as='h5'>{`@${post.postedBy}`}</Card.Header>
-          <Card.Subtitle className='mt-3'>{post.postedBy ? post.postedBy.name : 'Identity hidden'}</Card.Subtitle>
+        <Card.Header className='post-user' as='h5'>{`@${x.postedBy}`}</Card.Header>
+          <Card.Subtitle className='mt-3'>{x.postedBy ? x.postedBy.name : 'Identity hidden'}</Card.Subtitle>
         {/* <Card.Subtitle className='mt-3'>post header</Card.Subtitle> */}
         <Card.Text className='mt-2'>
-          {post.text}
+          {x.text}
           </Card.Text>
         <Card.Subtitle className='mt-3'>Comments</Card.Subtitle>
       </Card.Body>
       <ListGroup  className='list-group-flash'>
-        {post.comments}
+        {x.comments}
         <ListGroup.Item>
 
           <InputGroup className='mb-3'>
@@ -126,7 +105,7 @@ export default function Post() {
             placeholder='Add comment' 
             aria-describedby='submitBtn'
             />
-            <Button variant='outline-secondary'>comment</Button>
+            <Button onClick={addComment} variant='outline-secondary'>comment</Button>
           </InputGroup>
         </ListGroup.Item>
       </ListGroup>
@@ -136,7 +115,7 @@ export default function Post() {
         </Button>
 
       </Card.Body>
-      <Card.Footer>{formatDate(post.createdAt)}</Card.Footer>
+      <Card.Footer>{x.createdAt}</Card.Footer>
     </Card>
     )).reverse()}
     </>

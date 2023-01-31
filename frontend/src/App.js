@@ -3,6 +3,7 @@ import WelcomeScreen from "./screens/welcomeScreen/WelcomeScreen";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import EditProfileScreen from "./screens/user/EditProfileScreen";
+import EditProduct from "./screens/admin/EditProduct";
 import SignupUser from "./screens/welcomeScreen/SignupUser";
 import Dashboard from "./screens/user/Dashboard";
 import Profile from "./components/Profile";
@@ -30,6 +31,7 @@ function App() {
       <Route path="/add-expense" element={<AddExpense />}/>
       <Route path="/post" element={<Post />}/>
       <Route path="/edit-expense" element={<EditExpense />}/>
+      <Route path="/edit-product" element={<EditProduct />}/>
       <Route path="/statistics" element={<StatScreen />}/>
     </Routes>
 

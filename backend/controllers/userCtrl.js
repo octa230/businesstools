@@ -1,6 +1,6 @@
 
 
-const {generateToken} = require('../helpers/isAuth')
+const { token } = require('../helpers/isAuth')
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler');
@@ -32,7 +32,7 @@ const newUser = new User({
     position: user.position,
     createdAt: user.createdAt,
     phone: user.phone,
-    token: generateToken(user)
+    token: token(user)
 })
 });
 
@@ -108,7 +108,7 @@ const SignIn = asyncHandler(async(req, res)=> {
                 phone: user.phone,
                 position: user.position,
                 createdAt: user.createdAt,  
-                token: generateToken(user)
+                token: token(user)
             })
             return
         }

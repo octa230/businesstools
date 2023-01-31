@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 
 
-const generateToken = (user) => {
+const token = (user) => {
     return jwt.sign(
       {
         _id: user._id,
@@ -18,17 +18,23 @@ const generateToken = (user) => {
     );
   };
 
-  
+
 const isAuth =(req, res, next)=> {
 
 const authorizaton = req.headers.authorizaton;
-if(authorizaton){
-    const token = authorizaton.slice(7, authorizaton.length); //Bearer XXXX
-    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+if(authorizaton && authorizaton.startsWith('Bearer')){
+
+    //get the bearer from headers
+    const token = authorizaton.split(' ')[1]; //Bearer XXXX
+
+    //verify token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if(err){
             res.status('401').send({message: 'invalid token'})
         } else {
-            req.user  = decode
+
+            //get user from token
+            req.user  = User.decoded.user.select('-password')
             next()
         }
     })
@@ -47,4 +53,4 @@ const isAdmin = (req, res, next)=>{
 
 module.exports = {isAdmin}
 
-module.exports = {isAuth, generateToken, isAdmin}
+module.exports = {isAuth, token, isAdmin}

@@ -53,8 +53,8 @@ const UserModel = new mongoose.Schema(
         type: String,
         required: [true, 'please add password']
     },
-    following:[{type: mongoose.Schema.ObjectId, ref: 'User'}],
-    followers:[{type: mongoose.Schema.ObjectId, ref: 'User'}]
+    following:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    followers:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 },
 {
     timestamps: true

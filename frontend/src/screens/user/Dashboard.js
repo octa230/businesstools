@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useReducer, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Header  from '../../components/Header'
 import Row from 'react-bootstrap/Row'
@@ -13,28 +13,69 @@ import User from '../../components/User'
 import Button from 'react-bootstrap/esm/Button'
 import { Store } from '../../Store'
 
+
+
+function reducer(state, action){
+    switch(action.type){
+        case 'FETCH POSTS':
+            return {...state, loading: true}
+        case 'FETCH_SUCCESS':
+            return {...state, loading: false, posts: action.payload}
+        case 'MAKE_POST':
+            return {...state, loading: true}
+        case 'POST_SUCCESS':
+            return {...state, postSuccess: true, loading: false}
+        case 'POST_FAIL':
+            return {...state, postSuccess: false, loading: false, error: action.payload }
+        case 'DELETE_POST':
+            return {...state, loading: true}
+        case 'REFRESH_PAGE':
+            return {...state, loading: true}
+        default:
+            return state
+    }
+
+}
+
 export default function Dashboard() {
 
+const {state, dispatch: ctxDispatch} = useContext(Store)
+const {postedBy} = state;
 
-const [posts, newPost] = useState('')
+const [{loading, posts, error, postSuccess}, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    posts:[],
+})
+
 const [text, setText] = useState('')
 
-const {state, dispatch: ctxDispatch} = useContext(Store)
+/* const {state, dispatch: ctxDispatch} = useContext(Store)
 const {userInfo} = state
+ */
 
 
-
-const makePost =  async(e) => {
+const newPost =  async(e) => {
     e.preventDefault()
     if(!text){
         toast.error('please add text to your post')
     }
+    dispatch({type: 'MAKE_POST'})
     try{
-        const {post} = await axios.post('/api/feed/posts/new', {text})
+        
+        const {post} = await axios.post('/api/feed/posts/new',{
+            Headers: {Authorisation: `Bearer${postedBy.token}` }
+        },
+        {
+            text,
+            postedBy,
+        })
+        dispatch({type: 'MAKE_SUCCESS', payload: posts})
 
-        ctxDispatch({type: 'MAKE_POST', payload: post})
-    } catch (err) {
-        toast.error(getError(err))
+        
+    }catch(err) {
+        toast.error(getError(error))
+        {dispatch({type: 'POST_FAIL'})}
     }
 
 }
@@ -67,7 +108,7 @@ const makePost =  async(e) => {
                 <FloatingLabel>
                     <Form.Control as='textarea' placeholder='make post' onChange={(e)=> setText(e.target.value)}
                     style={{height:'100px'}} />
-                    <Button onClick={makePost} className='d-flex mt-3'>Make post</Button>                    
+                    <Button onClick={newPost} className='d-flex mt-3'>Make post</Button>                    
                 </FloatingLabel><br />
                 
 <Form.Text>
@@ -80,8 +121,9 @@ const makePost =  async(e) => {
                 >
                 <Form.Control as='textarea' 
                 placeholder='Make general post'
+                value={text}
                 onChange={(e)=> setText(e.target.value)}/>
-                <Button onClick={makePost} variant='success' className='d-flex mt-3'>send post</Button>  
+                <Button onClick={newPost} variant='success' className='d-flex mt-3'>send post</Button>  
                     
                 </FloatingLabel>
                 <Post />

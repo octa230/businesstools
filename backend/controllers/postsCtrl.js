@@ -1,11 +1,10 @@
 const asyncHandler = require('express-async-handler')
-const { get } = require('lodash')
 const User = require('../models/userModel')
 const Post = require('../models/postModel')
 
 
-const feed = asyncHandler(async(req, res)=>{
- const posts = await Post.find()
+const feed = asyncHandler(async(req, res)=> {
+ const posts = await Post.find({})
  res.send(posts)
 })
 
@@ -15,8 +14,8 @@ const createPost = asyncHandler(async(req, res)=> {
     res.send(post)
 })
 
-const deletePost = asyncHandler(async(req, res) =>{
-    const post = await Post.findByIdAndDelete(req.params.id)
+const deletePost = asyncHandler(async(req, res)=> {
+    const post = await Post.findByIdAndDelete(req.params._id)
     if(!post){
         res.status(404).send('Post Not Found')
     }else{
@@ -47,7 +46,7 @@ const addComment = asyncHandler(async(req, res)=> {
 })
 
 const getUserPosts = asyncHandler(async(req, res)=>{
-let posts = await Post.find({postedBy: req.params.id})
+let posts = await Post.find({postedBy: req.params._id})
 .populate('comments.postedBy', '_id name')
 .populate('postedBy', '_id name')
 .sort('-created')
@@ -56,9 +55,9 @@ let posts = await Post.find({postedBy: req.params.id})
 res.send(posts) 
 })
 
-const myposts = asyncHandler(async(req, res)=> {
-    const minePosts = await Post.findById({postedBy: req.params._id});
-    res.send(minePosts)
+const post = asyncHandler(async(req, res)=> {
+    const post = await Post.findById(req.params._id);
+    res.send(post)
 })
 
-module.exports = {feed, getUserPosts, createPost, myposts, deletePost}
+module.exports = {post, feed, getUserPosts, addComment, createPost,deletePost}

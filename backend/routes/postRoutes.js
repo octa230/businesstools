@@ -1,7 +1,13 @@
 const express = require('express')
 const {isAuth} = require('../helpers/isAuth')
 
-const {feed, getUserPosts, createPost, myposts, deletePost} = require('../controllers/postsCtrl')
+const {
+    feed, 
+    post,
+    getUserPosts, 
+    addComment, createPost, 
+    deletePost
+} = require('../controllers/postsCtrl')
 
 
 
@@ -11,11 +17,11 @@ const postRouter = express.Router();
 
 postRouter.get('/posts', feed)
 postRouter.get('/userposts', isAuth, getUserPosts)
-postRouter.get('/myPosts', isAuth, myposts)
 postRouter.get('/posts/:userId', isAuth, getUserPosts)
-postRouter.post('/posts/new', createPost)
-postRouter.post('/posts/:_Id/comment')
+postRouter.post('/posts/new', isAuth, createPost)
+postRouter.post('/posts/:_id/comment', addComment)
 postRouter.delete('/posts/delete/:_id', deletePost)
+postRouter.get('/post/:_id', post)
 
 
 

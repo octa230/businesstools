@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {Schema} = require('mongoose')
+
  
 const commentSchema = new mongoose.Schema({
     text: String,
@@ -23,7 +23,8 @@ const postModel = new mongoose.Schema({
         contentType: String
     },
     postedBy: { 
-        type: Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true,
         ref: 'User',
     },
     createdAt:{

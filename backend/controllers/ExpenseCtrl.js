@@ -43,7 +43,7 @@ const updateExpense = asyncHandler(async(req, res)=> {
 
 })
 
-const deleteExpense = asyncHandler(async(req, res)=>{
+const deleteExpense = asyncHandler(async(req, res)=> {
     const expense = req.expense
     if(expense){
         await expense.remove()

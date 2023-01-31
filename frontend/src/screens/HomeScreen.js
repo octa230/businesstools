@@ -30,7 +30,8 @@ export default function HomeScreen() {
     try{
       const {data} = await Axios.post('/api/users/signin', {
         email,
-        password
+        password,
+        token,
       })
 
       ctxDispatch({type: 'SIGN_IN', payload: data});

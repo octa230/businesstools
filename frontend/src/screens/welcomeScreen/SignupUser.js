@@ -37,6 +37,7 @@ export default function SignupUser() {
 
     const submitHandler = async(e)=> {
         e.preventDefault()
+        
         if(password !== ConfirmPassword){
             toast.error('passwords don\'t match');
             return;
@@ -46,7 +47,10 @@ export default function SignupUser() {
            name,phone,
            email,photo,
            password,
-           company, role, position, location,
+           company, 
+           role, 
+           position, 
+           location,
         });
 
         ctxDispatch({type: 'SIGN_IN', payload: data})
