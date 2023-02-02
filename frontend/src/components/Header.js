@@ -8,7 +8,7 @@ import { Store } from '../Store';
 export default function Header({title, link1, link2, link3, link4, dropdown, dropdownLink1, dropdownLink2, dropdownLink3 }){
 
   const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo} = state
+  const {userToken} = state
 
   function signOutHandler(){
     ctxDispatch({type: 'SIGN_OUT'})
@@ -28,7 +28,8 @@ export default function Header({title, link1, link2, link3, link4, dropdown, dro
                 <Nav.Link href='/profile'>{link3}</Nav.Link>
                 <Nav.Link href='/create-product'>{link4}</Nav.Link>
                
-                <NavDropdown className='d-flex justify-content-end' title={dropdown} id='responsive-navbar-dropdown'>
+                <NavDropdown className='d-flex justify-content-end' title={dropdown} 
+                id='responsive-navbar-dropdown'>
                     <NavDropdown.Item onClick={signOutHandler}>{dropdownLink1}</NavDropdown.Item>
                     <NavDropdown.Item href='/add-expense'>{dropdownLink2}</NavDropdown.Item>
                     <NavDropdown.Item href='/edit-profile'>{dropdownLink3}</NavDropdown.Item>                  

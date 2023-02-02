@@ -6,7 +6,7 @@ const {
     post,
     getUserPosts, 
     addComment, createPost, 
-    deletePost
+    deletePost,
 } = require('../controllers/postsCtrl')
 
 
@@ -15,12 +15,12 @@ const {
 const postRouter = express.Router();
 
 
-postRouter.get('/posts', feed)
+postRouter.get('/posts/', feed)
 postRouter.get('/userposts', isAuth, getUserPosts)
-postRouter.get('/posts/:userId', isAuth, getUserPosts)
-postRouter.post('/posts/new', isAuth, createPost)
+postRouter.get('/posts/:userId', getUserPosts)
+postRouter.post('/posts/new', createPost)
 postRouter.post('/posts/:_id/comment', addComment)
-postRouter.delete('/posts/delete/:_id', deletePost)
+postRouter.delete('/delete/post/:_id', deletePost)
 postRouter.get('/post/:_id', post)
 
 

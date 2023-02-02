@@ -51,7 +51,7 @@ export default function Profile(props) {
 
  
   const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo} = state;
+  const {userToken} = state;
 
   return (
     <>
@@ -75,7 +75,7 @@ export default function Profile(props) {
             <Image className='rounded form-img' 
             src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg
         ?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='/>
-        <span>{userInfo.name} 
+        <span>{userToken.name} 
         <Button variant='' href='/edit-profile'>
             <PencilFill />
             </Button>
@@ -84,16 +84,16 @@ export default function Profile(props) {
         </span>
         </Col>
         <Col xs={12} md={5}>
-            <p>{`${userInfo.name}'s profile`}</p>
+            <p>{`${userToken.name}'s profile`}</p>
         </Col>
         <Col xs={12} md={4}>
             <ListGroup className='d-flex justify-content-between'>
-                <ListGroup.Item><Text>Email: </Text> {userInfo.email}</ListGroup.Item>
-                <ListGroup.Item><Text>Company: </Text>{userInfo.company}</ListGroup.Item>
-                <ListGroup.Item><Text>Location: </Text> {userInfo.location}</ListGroup.Item>
-                <ListGroup.Item><Text>Position: </Text> {userInfo.position}</ListGroup.Item>
-                <ListGroup.Item><Text>Phone: </Text> {userInfo.phone}</ListGroup.Item>
-                <ListGroup.Item><Text>Joined on: </Text> {userInfo.createdAt}</ListGroup.Item>         
+                <ListGroup.Item><Text>Email: </Text> {userToken.email}</ListGroup.Item>
+                <ListGroup.Item><Text>Company: </Text>{userToken.company}</ListGroup.Item>
+                <ListGroup.Item><Text>Location: </Text> {userToken.location}</ListGroup.Item>
+                <ListGroup.Item><Text>Position: </Text> {userToken.position}</ListGroup.Item>
+                <ListGroup.Item><Text>Phone: </Text> {userToken.phone}</ListGroup.Item>
+                <ListGroup.Item><Text>Joined on: </Text> {userToken.createdAt}</ListGroup.Item>         
             </ListGroup>
         </Col>
       </Row>

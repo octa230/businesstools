@@ -18,15 +18,15 @@ const postModel = new mongoose.Schema({
         type: String,
         required: [true, 'Add text to Make post ']
     },
+    user:{
+        type: String,
+        required: true
+    },
     photo:{
         data: Buffer,
         contentType: String
     },
-    postedBy: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        required: true,
-        ref: 'User',
-    },
+    postedBy: { type: mongoose.Schema.ObjectId, required: true, ref: 'User'},
     createdAt:{
         type: Date,
         default: Date.now

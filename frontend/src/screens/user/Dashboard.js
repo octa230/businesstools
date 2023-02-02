@@ -34,13 +34,12 @@ function reducer(state, action){
         default:
             return state
     }
-
 }
 
 export default function Dashboard() {
 
 const {state, dispatch: ctxDispatch} = useContext(Store)
-const {postedBy} = state;
+const {userToken} = state;
 
 const [{loading, posts, error, postSuccess}, dispatch] = useReducer(reducer, {
     loading: true,
@@ -54,6 +53,10 @@ const [text, setText] = useState('')
 const {userInfo} = state
  */
 
+async function newGeneralPost(){
+
+}
+
 
 const newPost =  async(e) => {
     e.preventDefault()
@@ -63,19 +66,18 @@ const newPost =  async(e) => {
     dispatch({type: 'MAKE_POST'})
     try{
         
-        const {post} = await axios.post('/api/feed/posts/new',{
-            Headers: {Authorisation: `Bearer${postedBy.token}` }
-        },
+        const {data} = await axios.post('/api/feed/posts/new',
+        {text, postedBy: userToken._id, user: userToken.name},
         {
-            text,
-            postedBy,
-        })
-        dispatch({type: 'MAKE_SUCCESS', payload: posts})
+            headers:{Authorization: `Bearer${userToken.token}`}
+        }
+        )
+        dispatch({type: 'MAKE_SUCCESS', payload: data})
 
         
-    }catch(err) {
-        toast.error(getError(error))
-        {dispatch({type: 'POST_FAIL'})}
+    }catch(error) {
+        console.log(error.message)
+        dispatch({type: 'POST_FAIL'})
     }
 
 }
@@ -106,7 +108,8 @@ const newPost =  async(e) => {
     <h1>Make Post</h1>
 </Form.Text>
                 <FloatingLabel>
-                    <Form.Control as='textarea' placeholder='make post' onChange={(e)=> setText(e.target.value)}
+                    <Form.Control as='textarea' placeholder='make post' 
+                    onChange={(e)=> setText(e.target.value)}
                     style={{height:'100px'}} />
                     <Button onClick={newPost} className='d-flex mt-3'>Make post</Button>                    
                 </FloatingLabel><br />
@@ -123,7 +126,7 @@ const newPost =  async(e) => {
                 placeholder='Make general post'
                 value={text}
                 onChange={(e)=> setText(e.target.value)}/>
-                <Button onClick={newPost} variant='success' className='d-flex mt-3'>send post</Button>  
+                <Button onClick={newGeneralPost} variant='success' className='d-flex mt-3'>send post</Button>  
                     
                 </FloatingLabel>
                 <Post />

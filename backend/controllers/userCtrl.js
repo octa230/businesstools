@@ -18,6 +18,7 @@ const newUser = new User({
     position: req.body.position, 
     company: req.body.company, 
     location: req.body.location, 
+    role: req.body.role,
     phone: req.body.phone,
     password: bcrypt.hashSync(req.body.password)     
     
@@ -27,6 +28,7 @@ const newUser = new User({
     _id: user._id,
     name: user.name,
     email: user.email,
+    role: user.role,
     location: user.location,
     company: user.company,
     position: user.position,
@@ -34,10 +36,7 @@ const newUser = new User({
     phone: user.phone,
     token: token(user)
 })
-});
-
-
-    
+});    
 
 //get all users
 
@@ -96,19 +95,20 @@ const getSingleuser = asyncHandler( async(req, res)=> {
 
 
 const SignIn = asyncHandler(async(req, res)=> {
-    const user = await User.findOne({email: req.body.email})
+    let user = await User.findOne({email: req.body.email})
     if(user){
         if(bcrypt.compareSync(req.body.password, user.password)){
             res.send({
-                id: user._id,
+                _id: user._id,
                 name: user.name,
                 email: user.email,
+                role: user.role,
                 location: user.location,
                 company: user.company,
                 phone: user.phone,
                 position: user.position,
                 createdAt: user.createdAt,  
-                token: token(user)
+                token: token(user._id)
             })
             return
         }

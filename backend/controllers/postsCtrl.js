@@ -9,17 +9,21 @@ const feed = asyncHandler(async(req, res)=> {
 })
 
 const createPost = asyncHandler(async(req, res)=> {
-    const newPost = new Post({text, postedBy, createdAt} = req.body)
+    
+    const newPost = new Post({text, postedBy, createdAt, user} = req.body)
     const post = await newPost.save() 
     res.send(post)
 })
 
 const deletePost = asyncHandler(async(req, res)=> {
-    const post = await Post.findByIdAndDelete(req.params._id)
+    const postID = req.params._id
+    const post = await Post.findByIdAndDelete(postID)
     if(!post){
-        res.status(404).send('Post Not Found')
+        res.status(404).send({message: 'unable to find post'})
+        return
     }else{
-        res.send('Post deleted successfully')
+         post.remove()
+        res.send({message: 'post Deleted Successfully'})
     }
 
 })
@@ -59,5 +63,6 @@ const post = asyncHandler(async(req, res)=> {
     const post = await Post.findById(req.params._id);
     res.send(post)
 })
+
 
 module.exports = {post, feed, getUserPosts, addComment, createPost,deletePost}

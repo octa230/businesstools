@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/esm/Form'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
 import Button from 'react-bootstrap/esm/Button'
 import { Trash } from 'react-bootstrap-icons'
-import { useParams } from 'react-router-dom'
 
 
 
@@ -47,48 +46,55 @@ export default function Post() {
   
   const[comments, addComment] = useState()
 
-  function formatDate(date){
-     return date = new Date().toLocaleTimeString()
-  }
-
 
   const [{ error, posts,  successDelete, loading }, dispatch] = 
   useReducer(reducer, {
-    posts:[],
     loading: true,
+    posts:[],
     error: '',
   });
 
 
   const { state } = useContext(Store);
-  const { userInfo } = state;
+  const { userToken } = state;
  
     useEffect(()=> {
-      const fetchPosts = async () => {
-        dispatch({type: 'FETCH_REQUEST'})
+      async function fetchPosts(){
         try{
-          const { data } = await axios.get('/api/feed/posts', {
-            headers: {Authorzation: `Bearer${userInfo.token}` }
-          })
-          dispatch({type: 'FETCH_SUCCESS', payload: data})
-        } catch (err){
-          toast.error(getError(error))
+          const posts = await axios.get('/api/feed/posts')
+          dispatch({type: 'FETCH_SUCCESS',  payload: posts.data})
+        } catch (error){
+         console.log((error.message))
+          
         }
       }
-        fetchPosts()
-    }, [userInfo, posts, error, successDelete])
+      fetchPosts() 
+    }, [])
 
-  function removePost(){
-
-  }
+ const removePost = async(post)=> {
+  if(window.confirm('Are you sure you want to delete Post?')){
+    try{
+      dispatch({type: 'DELETE_REQUEST'});
+       axios.delete(`/api/feed/delete/post/${post._id}`, 
+      {
+        headers:{ Authorization: `Bearer${userToken.token}`}
+      })
+      toast.success('post deleted successfully');
+      dispatch({type: 'DELETE_SUCESS'})
+    }catch(error){
+      console.log(error.message)
+      dispatch({type: 'DELETE_FAIL'})
+    }
+  } 
+ }
 
   return (
     <>
     {posts.map((x)=> (
       <Card border='light' className='mt-4 mb-4' key={x._id}>  
       <Card.Body>
-        <Card.Header className='post-user' as='h5'>{`@${x.postedBy}`}</Card.Header>
-          <Card.Subtitle className='mt-3'>{x.postedBy ? x.postedBy.name : 'Identity hidden'}</Card.Subtitle>
+        <Card.Header className='post-user' as='h5'>{`@${x.user}`}</Card.Header>
+          <Card.Subtitle className='mt-3'>{x.user ? x.user : 'Identity hidden'}</Card.Subtitle>
         {/* <Card.Subtitle className='mt-3'>post header</Card.Subtitle> */}
         <Card.Text className='mt-2'>
           {x.text}

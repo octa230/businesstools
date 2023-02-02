@@ -85,6 +85,7 @@ export default function User() {
             <ListGroup.Item><Text>Company: </Text>{user.company}</ListGroup.Item>
             <ListGroup.Item><Text>Location: </Text>{user.location}</ListGroup.Item>
             <ListGroup.Item><Text>Position: </Text>{user.position}</ListGroup.Item>
+            <ListGroup.Item><Text>Role: </Text>{user.role}</ListGroup.Item>
             <ListGroup.Item><Text>Phone: </Text>{user.phone}</ListGroup.Item>
             <ListGroup.Item><Text>Added On: </Text>{user.createdAt}</ListGroup.Item>
             <ListGroup.Item>

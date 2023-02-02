@@ -6,6 +6,7 @@ const UserModel = new mongoose.Schema(
     name:{
         type: String,
         trim: true,
+        unique: [true, 'username already taken'],
         required: 'Name is required', 
     },
     company:{
@@ -34,7 +35,6 @@ const UserModel = new mongoose.Schema(
     },
     email:{
         type: String,
-        trim: true,
         required:[true, 'Please add Email'],
         unique: [true, 'email already exists'],
         match: [/.+\@.+\..+/, 'Please fill a valid email address']

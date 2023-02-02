@@ -5,8 +5,8 @@ export const Store =  createContext()
 const initialState = {
 
     menubox: false,
-    userInfo: localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo'))
+    userToken: localStorage.getItem('userToken')
+    ? JSON.parse(localStorage.getItem('userToken'))
     : null
 
 
@@ -19,11 +19,11 @@ function reducer(state, action){
         case 'SET_MENU_OFF':
             return {...state, menubox: false}
         case 'SIGN_IN':
-            return {...state, userInfo: action.payload}
+            return {...state, userToken: action.payload}
         case 'SIGN_OUT':
             return {
                 ...state,
-                userInfo: null,
+                userToken: null,
             }
         default:
             return state;

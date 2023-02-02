@@ -22,7 +22,7 @@ export default function HomeScreen() {
 
   const {state, dispatch: ctxDispatch} = useContext(Store)
 
-  const {userInfo} = state;
+  const {userToken} = state;
 
   const submitHandler = async(e)=> {
     e.preventDefault()
@@ -31,12 +31,11 @@ export default function HomeScreen() {
       const {data} = await Axios.post('/api/users/signin', {
         email,
         password,
-        token,
       })
 
       ctxDispatch({type: 'SIGN_IN', payload: data});
-      localStorage.setItem('userInfo', JSON.stringify(data))
-      navigate(redirect || '/dashboard')
+      localStorage.setItem('userToken', JSON.stringify(data))
+      navigate(redirect || '/profile')
       console.log('successfully signed in')
 
     } catch(err){
@@ -46,11 +45,10 @@ export default function HomeScreen() {
   };
 
   useEffect(()=> {
-    if(userInfo){
+    if(userToken){
       navigate(redirect)
     }
-  }, [navigate, redirect, userInfo])
-
+  }, [navigate, redirect, userToken])
 
 
   return (
@@ -65,14 +63,14 @@ export default function HomeScreen() {
                 <Form.Group className='mb-3' controlId='email'>
                     <Form.Label>Email: </Form.Label>
                     <Form.Control type='email' placeholder='Add Email' 
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)} required
                     />
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='password'>
                     <Form.Label>password: </Form.Label>
                     <Form.Control type='password' placeholder='Add password' 
-                    onChange= {(e) => setPassword(e.target.value)}
+                    onChange= {(e) => setPassword(e.target.value)} required
                     />
                 </Form.Group>
                 <Button variant='primary' type='submit'>submit</Button>

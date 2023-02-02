@@ -22,7 +22,7 @@ export default function SignupUser() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [company, setCompany] = useState('')
-    const [role, setRole] = useState('')
+    const [role, setRole] = useState(false)
     const [position, setPosition ] = useState('')
     const [location, setLocation] = useState('')
     const [phone, setPhone] = useState('')
@@ -32,7 +32,7 @@ export default function SignupUser() {
 
  
     const {state, dispatch: ctxDispatch} = useContext(Store);
-    const {userInfo} = state;
+    const {userToken} = state;
 
 
     const submitHandler = async(e)=> {
@@ -54,7 +54,7 @@ export default function SignupUser() {
         });
 
         ctxDispatch({type: 'SIGN_IN', payload: data})
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('userToken', JSON.stringify(data))
        navigate(redirect || '/profile')  
     } catch (err) {
         toast.error(getError(err))
@@ -62,10 +62,10 @@ export default function SignupUser() {
     }
 
     useEffect(()=> {
-        if(userInfo){
+        if(userToken){
             navigate(redirect)
         } 
-    }, [navigate, redirect, userInfo])
+    }, [navigate, redirect, userToken])
 
   return (
     <>
@@ -106,7 +106,8 @@ export default function SignupUser() {
             </Form.Group>
             <Form.Group className='mb-3' controlId='location'>
                 <Form.Label>Area</Form.Label>
-                <Form.Control onChange={(e) => setLocation(e.target.value)} placeholder='location of operation' />
+                <Form.Control onChange={(
+                    e) => setLocation(e.target.value)} placeholder='location of operation' />
             </Form.Group>
             <Form.Group className='mb-3' controlId='phone'>
                 <Form.Label>Phone</Form.Label>
@@ -126,6 +127,14 @@ export default function SignupUser() {
                 <Form.Label>Photo: </Form.Label>
                 <Form.Control onChange={(e)=> setPhoto(e.target.files[0])} type='file' />
             </Form.Group>
+            <Form.Check
+            className="mb-3"
+            type="checkbox"
+            id="role"
+            
+            label="Administrator"
+            onChange={(e) => setRole(e.target.checked)}
+          />
             <Button variant='primary' type='submit'>Add employee</Button>
         </Form>
       
