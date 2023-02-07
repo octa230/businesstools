@@ -95,11 +95,12 @@ const getSingleuser = asyncHandler( async(req, res)=> {
 
 
 const SignIn = asyncHandler(async(req, res)=> {
-    let user = await User.findOne({email: req.body.email})
+   const {email, password} = req.body
+   const user = await User.findOne({email})
     if(user){
-        if(bcrypt.compareSync(req.body.password, user.password)){
+        if(bcrypt.compareSync(password, user.password)){
             res.send({
-                _id: user._id,
+                id: user._id,
                 name: user.name,
                 email: user.email,
                 role: user.role,
@@ -108,7 +109,7 @@ const SignIn = asyncHandler(async(req, res)=> {
                 phone: user.phone,
                 position: user.position,
                 createdAt: user.createdAt,  
-                token: token(user._id)
+                token: token(user)
             })
             return
         }

@@ -18,6 +18,7 @@ export default function StatScreen() {
     link1={'invetory'}
     link2={'Team'}
     link3={'Profile'}
+    link5={'Add-employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}

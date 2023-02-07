@@ -1,4 +1,4 @@
-import { useContext, useReducer, useState } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container'
 import Header  from '../../components/Header'
 import Row from 'react-bootstrap/Row'
@@ -12,6 +12,7 @@ import Post from '../../components/Post'
 import User from '../../components/User'
 import Button from 'react-bootstrap/esm/Button'
 import { Store } from '../../Store'
+import { useParams } from 'react-router-dom'
 
 
 
@@ -21,22 +22,26 @@ function reducer(state, action){
             return {...state, loading: true}
         case 'FETCH_SUCCESS':
             return {...state, loading: false, posts: action.payload}
+        case 'FETCH_FAIL':
+            return {...state, loading: false, error: action.payload}
         case 'MAKE_POST':
             return {...state, loading: true}
         case 'POST_SUCCESS':
-            return {...state, postSuccess: true, loading: false}
+            return {...state, postSuccess: true, loading: false, payload: action.payload}
         case 'POST_FAIL':
             return {...state, postSuccess: false, loading: false, error: action.payload }
         case 'DELETE_POST':
             return {...state, loading: true}
         case 'REFRESH_PAGE':
-            return {...state, loading: true}
+            return {...state, posts: action.payload}
         default:
             return state
     }
 }
 
+
 export default function Dashboard() {
+
 
 const {state, dispatch: ctxDispatch} = useContext(Store)
 const {userToken} = state;
@@ -47,7 +52,26 @@ const [{loading, posts, error, postSuccess}, dispatch] = useReducer(reducer, {
     posts:[],
 })
 
+
+
+useEffect(()=> {
+    async function fetchPosts(){
+      dispatch({type: 'FETCH_REQUEST'})
+        try{
+          const result = await axios.get(`/api/feed/posts/`)
+          dispatch({type: 'FETCH_SUCCESS',  payload: result.data})
+        } catch (error){
+         dispatch({type:'FETCH_FAIL', payload: error.message})
+        }
+      }
+      fetchPosts() 
+    }, [])
+
+
+
+  
 const [text, setText] = useState('')
+const [generalText, setGeneralText] = useState('')
 
 /* const {state, dispatch: ctxDispatch} = useContext(Store)
 const {userInfo} = state
@@ -63,21 +87,18 @@ const newPost =  async(e) => {
     if(!text){
         toast.error('please add text to your post')
     }
-    dispatch({type: 'MAKE_POST'})
     try{
-        
         const {data} = await axios.post('/api/feed/posts/new',
-        {text, postedBy: userToken._id, user: userToken.name},
-        {
-            headers:{Authorization: `Bearer${userToken.token}`}
-        }
+        {text, postedBy: userToken.id, user: userToken.name},
+        {headers: {authorization: `Bearer${userToken.Token}`}},
+        
+        dispatch({type: 'POST_SUCCESS'})
+    
         )
-        dispatch({type: 'MAKE_SUCCESS', payload: data})
-
         
     }catch(error) {
         console.log(error.message)
-        dispatch({type: 'POST_FAIL'})
+        dispatch({type: 'POST_FAIL', payload: error.message})
     }
 
 }
@@ -90,6 +111,7 @@ const newPost =  async(e) => {
     link1={'invetory'}
     link2={'Team'}
     link3={'Profile'}
+    link5={'Add employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}
@@ -124,13 +146,14 @@ const newPost =  async(e) => {
                 >
                 <Form.Control as='textarea' 
                 placeholder='Make general post'
-                value={text}
-                onChange={(e)=> setText(e.target.value)}/>
+                value={generalText}
+                onChange={(e)=> setGeneralText(e.target.value)}/>
                 <Button onClick={newGeneralPost} variant='success' className='d-flex mt-3'>send post</Button>  
                     
                 </FloatingLabel>
-                <Post />
-
+              {posts.map((post)=>(
+                <Post post={post} key={post._id}/>
+              )).reverse()}
             </Col>
             <Col xs={12} xl={4}>
                 <Form.Text>

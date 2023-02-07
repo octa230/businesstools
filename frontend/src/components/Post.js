@@ -1,129 +1,210 @@
-import React, {useReducer, useContext, useEffect, useState } from 'react'
+import React, {useReducer, useContext, useEffect, useState, useRef} from 'react'
 import Card from 'react-bootstrap/esm/Card'
 import { Store } from '../Store'
-import { getError } from '../utils'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import ListGroup from 'react-bootstrap/esm/ListGroup'
 import Form from 'react-bootstrap/esm/Form'
+import Comment from './Comment'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
-import Button from 'react-bootstrap/esm/Button'
-import { Trash } from 'react-bootstrap-icons'
+import {Button, Badge, Container} from 'react-bootstrap/esm/'
+import { Trash,} from 'react-bootstrap-icons'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 
 
 
-const reducer = (state, action) => {
+
+ const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true };
+    
+    case 'COMMENT_REQUEST':
+      return {...state, loadingCreateComment: true}
+    case 'COMMENT_SUCCESS':
+      return {...state, loadingCreateComment: false}
+    case 'COMMENT_FAIL':
+
+
+      return {...state, loadingCreateComment: false}
+    case 'FECTH_REQUEST':
+      return {...state, loading: true}
     case 'FETCH_SUCCESS':
-      return { ...state, posts: action.payload, loading: false };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
+      return {...state, posts: action.payload}
+    case 'FECTH_FAIL':
+      return {...state, loading: false, error: action.payload}
+
+    case 'FETCH_POST_SUCCESS':
+      return {...state, loading: false, post: action.payload}
+
     case 'DELETE_REQUEST':
-      return {...state, loading: true, successDelete: false};
+      return {...state, post: action.payload, loadingDelete: true}
     case 'DELETE_SUCCESS':
-      return {...state, loadingDelete: false, successDelete: true};
+      return {...state, loadingDelete: false}
     case 'DELETE_FAIL':
-      return {...state, loadingDelete: false, successDelete: false};
-    case 'MAKE_POST':
-      return {...state, loadingPost: true, postSuccess: false};
-    case 'POST_SUCCESS':
-      return {...state, loadingPost: false, postSuccess: true}
-    case 'POST_FAIL':
-      return {...state, loadingPost: false, postSuccess: false}
+      return {...state, loadingDelete: false, error: action.payload }
     case 'REFRESH_POST':
-      return {...state, loadingPost: true }
+        return {...state, post: action.payload}
     default:
       return state;
   }
-};
+}; 
 
-export default function Post() {
+export default function Post(props) {
 
-  
-  const[comments, addComment] = useState()
+const {post}=props
+const postId = post._id
+let cxt = post.comments.length;
+const params = useParams()
+const {id: postID}= params
+
+let commentsRef = useRef
 
 
-  const [{ error, posts,  successDelete, loading }, dispatch] = 
+  const[comment, setComment] = useState('')
+  const navigate = useNavigate()
+ 
+
+const [{ error, posts, loadingCreateComment, loading, loadingDelete }, dispatch] = 
   useReducer(reducer, {
     loading: true,
     posts:[],
+    post:[],
     error: '',
-  });
+  }); 
 
 
   const { state } = useContext(Store);
   const { userToken } = state;
- 
-    useEffect(()=> {
-      async function fetchPosts(){
-        try{
-          const posts = await axios.get('/api/feed/posts')
-          dispatch({type: 'FETCH_SUCCESS',  payload: posts.data})
-        } catch (error){
-         console.log((error.message))
-          
-        }
-      }
-      fetchPosts() 
-    }, [])
 
- const removePost = async(post)=> {
-  if(window.confirm('Are you sure you want to delete Post?')){
-    try{
-      dispatch({type: 'DELETE_REQUEST'});
-       axios.delete(`/api/feed/delete/post/${post._id}`, 
-      {
-        headers:{ Authorization: `Bearer${userToken.token}`}
-      })
-      toast.success('post deleted successfully');
-      dispatch({type: 'DELETE_SUCESS'})
+  useEffect(()=> {
+    async function getPost(){
+      try{
+      dispatch({type: 'FETCH_REQUEST'})
+      const result = await axios.get(`/api/feed/post/${postId}`)
+  
+      if(result){
+        dispatch({type: 'FETCH_POST_SUCCESS', payload: result.data})
+  
+      }else{
+        dispatch({type: 'FETCH_FAIL', payload: error.message})
+      } 
+      
     }catch(error){
-      console.log(error.message)
-      dispatch({type: 'DELETE_FAIL'})
+        console.log(error)
+      }
     }
-  } 
- }
+    getPost()
+  }, [postId, error])
 
+
+
+
+async function removePost(post){
+  if(window.confirm('Delete this post?')){
+    try{
+      const post = await axios.delete(`/api/feed/delete/post/${postId}`,
+      {headers: {authorization: `Bearer${userToken.token}`}
+    })
+    toast.success('post deleted successfully')
+    dispatch({type: 'DELETE_SUCCESS'})
+    
+    }catch(err){
+      toast.error(err)
+      dispatch({
+        type: 'DELETE_FAIL'
+      })
+    }
+  }
+}
+
+  async function addComment(e){
+
+    e.preventDefault()
+    if(!comment){
+      window.alert('please type comment')
+      return;
+    }
+    try{
+      const {data} = await axios.post(`/api/feed/post/${postId}/comment`,
+      {comment, postedBy: userToken._id, name: userToken.name},
+      {
+        headers:{authorization: `Bearer${userToken.token}`}
+      }
+      )
+      dispatch({type: 'COMMENT_SUCCESS'})
+      toast.success('comment added')
+      post.comments.unshift(data.comment)
+      dispatch({type: 'REFRESH_POST', payload: post})
+      window.scrollTo({
+        behavior: 'smooth',
+        top: commentsRef.current.offSetTop
+      })
+    } catch(error){
+      toast.error(error.message)
+    }
+  }
+
+
+ 
   return (
-    <>
-    {posts.map((x)=> (
-      <Card border='light' className='mt-4 mb-4' key={x._id}>  
-      <Card.Body>
-        <Card.Header className='post-user' as='h5'>{`@${x.user}`}</Card.Header>
-          <Card.Subtitle className='mt-3'>{x.user ? x.user : 'Identity hidden'}</Card.Subtitle>
-        {/* <Card.Subtitle className='mt-3'>post header</Card.Subtitle> */}
-        <Card.Text className='mt-2'>
-          {x.text}
-          </Card.Text>
-        <Card.Subtitle className='mt-3'>Comments</Card.Subtitle>
-      </Card.Body>
-      <ListGroup  className='list-group-flash'>
-        {x.comments}
-        <ListGroup.Item>
-
-          <InputGroup className='mb-3'>
-            <Form.Control
-            as='textarea'
-            placeholder='Add comment' 
-            aria-describedby='submitBtn'
-            />
-            <Button onClick={addComment} variant='outline-secondary'>comment</Button>
-          </InputGroup>
-        </ListGroup.Item>
-      </ListGroup>
-      <Card.Body>
-        <Button onClick={removePost} className='deletePost' variant='secondary'>
-          <Trash />
-        </Button>
-
-      </Card.Body>
-      <Card.Footer>{x.createdAt}</Card.Footer>
-    </Card>
-    )).reverse()}
-    </>
+    <Container className='fluid'>
+      
+       <Card border='light' className='mb-4 p-0' key={post.id}>  
+       <Card.Header className='d-flex post-user' as={'h5'}>{`@${post.user}`}
+         <span>
+            { cxt !== 1 || 0 ? (<Badge>{cxt}: comments</Badge>): (<Badge>{cxt}: comment</Badge>)}
+          </span>
+          </Card.Header>
+       <Card.Body>
+         
+           <Card.Subtitle className='mt-3'>{post.user ? post.user : 'Identity hidden'}</Card.Subtitle>
+         {/* <Card.Subtitle className='mt-3'>post header</Card.Subtitle> */}
+         <Card.Text className='mt-2'>
+           {post.text}
+           </Card.Text>
+         <Card.Subtitle className='mt-3'>Comments:</Card.Subtitle>
+       </Card.Body>
+       <ListGroup  className='list-group-flash'>
+         
+          
+          {post.comments.map((cx)=>(
+               <ListGroup.Item key={cx._id}>
+               <ul className='d-flex commentHead'>
+                 <li>{cx.name}</li>
+                 <li>{cx.createdAt}</li>
+               </ul>
+               <p>
+                 {cx.comment}
+               </p>
+           
+             </ListGroup.Item> 
+          ) 
+         )}
+          
+         </ListGroup>
+         <ListGroup.Item>
+           <InputGroup className='mb-3'>
+             <Form.Control
+             as='textarea'
+             placeholder='Add comment' 
+             aria-describedby='submitBtn'
+             value={comment}
+             onChange={(e)=>setComment(e.target.value)}
+             />
+             <Button onClick={addComment} variant='outline-secondary'>comment</Button>
+           </InputGroup>
+         </ListGroup.Item>
+       
+       <Card.Body>
+         <Button onClick={removePost} className='deletePost' variant='secondary'>
+           <Trash />
+         </Button>
+ 
+       </Card.Body>
+       <Card.Footer>{post.createdAt}</Card.Footer>
+     </Card>
+    
+    </Container>
   )
 }

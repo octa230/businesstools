@@ -29,7 +29,8 @@ const reducer = (state, action) => {
 };
 
 
-export default function User() {
+export default function User(props) {
+
 
   const [{ loading, error, users }, dispatch] = useReducer((reducer), {
     users: [],

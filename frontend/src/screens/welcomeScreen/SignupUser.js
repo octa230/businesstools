@@ -62,7 +62,7 @@ export default function SignupUser() {
     }
 
     useEffect(()=> {
-        if(userToken){
+        if(!userToken){
             navigate(redirect)
         } 
     }, [navigate, redirect, userToken])

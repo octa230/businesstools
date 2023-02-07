@@ -13,7 +13,7 @@ export default function EditProfileScreen() {
 
 
   const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo} = state
+  const {userToken} = state
 
 
   const ClickSubmit=()=>{
@@ -58,12 +58,12 @@ export default function EditProfileScreen() {
         <Form.Group className='mb-4 pt-4' controlId='name'>
           <Form.Label>Name: </Form.Label>
           <Form.Control placeholder='Name'/>
-          <Form.Text className='text-muted'>{userInfo.name}</Form.Text>
+          <Form.Text className='text-muted'>{userToken.name}</Form.Text>
           </Form.Group>
 
           <Form.Group className='mb-4'>
           <Form.Label>Email: </Form.Label>
-          <Form.Control plaintext readOnly defaultValue={userInfo.email} />
+          <Form.Control plaintext readOnly defaultValue={userToken.email} />
           <Form.Text className='text-muted'>Ask administrator update your email </Form.Text>
           </Form.Group>
 

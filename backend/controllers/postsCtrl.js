@@ -4,7 +4,7 @@ const Post = require('../models/postModel')
 
 
 const feed = asyncHandler(async(req, res)=> {
- const posts = await Post.find({})
+ const posts = await Post.find()
  res.send(posts)
 })
 
@@ -18,11 +18,10 @@ const createPost = asyncHandler(async(req, res)=> {
 const deletePost = asyncHandler(async(req, res)=> {
     const postID = req.params._id
     const post = await Post.findByIdAndDelete(postID)
-    if(!post){
-        res.status(404).send({message: 'unable to find post'})
+    if(post){
+        await post.remove()
         return
     }else{
-         post.remove()
         res.send({message: 'post Deleted Successfully'})
     }
 
@@ -32,20 +31,21 @@ const addComment = asyncHandler(async(req, res)=> {
     const postID = req.params._id;
     const post = await Post.findById(postID) 
 
-    const comment = {
-        name: req.user.name,
-        comment: req.body.comment
+    const comment = {   
+        postedBy: req.body.postedBy, 
+        comment: req.body.comment,
+        name: req.body.name
     }
 
     post.comments.push(comment);
-    const TTcomments = post.reviews.reduce((a, c) => c.rating + a, 0) /
-    post.reviews.length;
+    /* const TTcomments = post.reviews.reduce((a, c) => c.rating + a, 0) /
+    post.reviews.length; */
 
     const updatedPost = await post.save()
     res.status(201).send({
     message: 'Comment added Successfully',
-    comment: updatedPost.comments[updatedPost.comments.length -1],
-    TTcomments: post.comments.length 
+    TTcomment: updatedPost.comments[updatedPost.comments.length -1],
+    
     })
 })
 
@@ -59,10 +59,15 @@ let posts = await Post.find({postedBy: req.params._id})
 res.send(posts) 
 })
 
-const post = asyncHandler(async(req, res)=> {
-    const post = await Post.findById(req.params._id);
-    res.send(post)
+const getPost = asyncHandler(async(req, res)=> {
+    const postID  = req.params.id
+    const post = await Post.findById(postID);
+    if(post){
+        res.send(post)
+    }else{
+        res.status(404).send({message: 'unabale to find post'})
+    }
 })
 
 
-module.exports = {post, feed, getUserPosts, addComment, createPost,deletePost}
+module.exports = {getPost, feed, getUserPosts, addComment, createPost,deletePost}

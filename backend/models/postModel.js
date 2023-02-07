@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 
  
 const commentSchema = new mongoose.Schema({
-    text: String,
+    comment: {type: String},
     createdAt: {type: Date, default: Date.now},
-    postedBy: {type: mongoose.Schema.ObjectId, ref: 'User'}
+    postedBy: {type: mongoose.Schema.ObjectId, ref: 'User'},
+    name: {type: String}
 },
 {
     timestamps: true
@@ -29,7 +30,10 @@ const postModel = new mongoose.Schema({
     postedBy: { type: mongoose.Schema.ObjectId, required: true, ref: 'User'},
     createdAt:{
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get:(createdAt)=>{
+            return createdAt.toDateString()
+        }
      },
      comments:[commentSchema]
 }) 
