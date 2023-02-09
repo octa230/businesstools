@@ -12,13 +12,14 @@ import { ArrowLeft } from 'react-bootstrap-icons'
 export default function EditProfileScreen() {
 
 
-  const {state, dispatch: ctxDispatch} = useContext(Store)
+  const {state, dispatch: ctxDispatch} = useContext(Store);
   const {userToken} = state
 
 
   const ClickSubmit=()=>{
     let userData = new FormData() 
   }
+
   return (
     <>
      <Header 

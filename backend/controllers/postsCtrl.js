@@ -16,7 +16,7 @@ const createPost = asyncHandler(async(req, res)=> {
 })
 
 const deletePost = asyncHandler(async(req, res)=> {
-    const postID = req.params._id
+    const postID = req.params.id
     const post = await Post.findByIdAndDelete(postID)
     if(post){
         await post.remove()
@@ -28,8 +28,8 @@ const deletePost = asyncHandler(async(req, res)=> {
 })
 
 const addComment = asyncHandler(async(req, res)=> {
-    const postID = req.params._id;
-    const post = await Post.findById(postID) 
+    const postId = req.params.id;
+    const post = await Post.findById(postId) 
 
     const comment = {   
         postedBy: req.body.postedBy, 
@@ -38,11 +38,12 @@ const addComment = asyncHandler(async(req, res)=> {
     }
 
     post.comments.push(comment);
-    /* const TTcomments = post.reviews.reduce((a, c) => c.rating + a, 0) /
-    post.reviews.length; */
+    const TTcomments = post.comments.reduce((a, c) => c.comment + a, 0) /
+    post.comments.length;
 
     const updatedPost = await post.save()
     res.status(201).send({
+    comments: updatedPost.comments,
     message: 'Comment added Successfully',
     TTcomment: updatedPost.comments[updatedPost.comments.length -1],
     
@@ -70,4 +71,4 @@ const getPost = asyncHandler(async(req, res)=> {
 })
 
 
-module.exports = {getPost, feed, getUserPosts, addComment, createPost,deletePost}
+module.exports = {getPost, feed, getUserPosts, addComment, createPost, deletePost}

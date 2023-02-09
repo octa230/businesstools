@@ -15,10 +15,11 @@ export default function Inventory() {
     <>
     <Header 
     title={'Tools Dashboard'}
-    link1={'invetory'}
-    link2={'Team'}
+    link1={'Invetory'}
+    link2={'Community'}
     link3={'Profile'}
     link4={'create product'}
+    link5={'Add Employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}

@@ -19,8 +19,8 @@ postRouter.get('/posts/', feed)
 postRouter.get('/userposts', isAuth, getUserPosts)
 postRouter.get('/posts/:userId', getUserPosts)
 postRouter.post('/posts/new', createPost)
-postRouter.post('/post/:_id/comment', addComment)
-postRouter.delete('/delete/post/:_id', deletePost)
+postRouter.post('/post/:id/comment', addComment)
+postRouter.delete('/delete/post/:id', deletePost)
 postRouter.get('/post/:id', getPost)
 
 

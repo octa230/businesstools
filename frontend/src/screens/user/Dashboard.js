@@ -108,10 +108,11 @@ const newPost =  async(e) => {
     <>
     <Header 
     title={'Tools Dashboard'}
-    link1={'invetory'}
-    link2={'Team'}
+    link1={'Invetory'}
+    link2={'Community'}
     link3={'Profile'}
     link5={'Add employee'}
+    link4={'Create product'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}

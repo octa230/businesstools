@@ -32,11 +32,11 @@ const reducer = (state, action) => {
 
 export default function User() {
 
-  const [{ loading, error, users }, dispatch] = useReducer((reducer), {
+  const [{ loading, error, users }, dispatch] = useReducer(reducer, {
     users: [],
     loading: true,
     error: '',
-  });
+  },[]);
 
     useEffect(()=> {
       const fetchUsers = async () => {
@@ -49,16 +49,18 @@ export default function User() {
         }
       }
       fetchUsers()
-    }, [])
+    }, [error, loading])
 
 
     return (
       <>
     <Header 
     title={'Tools Dashboard'}
-    link1={'invetory'}
-    link2={'Team'}
+    link1={'Invetory'}
+    link2={'Community'}
     link3={'Profile'}
+    link4={'Create Product'}
+    link5={'Add Employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}
@@ -88,18 +90,13 @@ export default function User() {
             <ListGroup.Item><Text>Role: </Text>{user.role}</ListGroup.Item>
             <ListGroup.Item><Text>Phone: </Text>{user.phone}</ListGroup.Item>
             <ListGroup.Item><Text>Added On: </Text>{user.createdAt}</ListGroup.Item>
-            <ListGroup.Item>
-            <Row>
-                <Col xs={12} md={8} className='p-2'>
-                  <ButtonGroup className='me-2' aria-label='Actions'>
-                    <Button variant='secondary'><Telephone /></Button>
-                    <Button variant='secondary'><EnvelopeAt /></Button>
-                    <Button variant='secondary'><PersonAdd /></Button>
-                    <Button variant='secondary'><PersonDash /></Button>
-                  </ButtonGroup>
-                </Col>
-              </Row>
-            </ListGroup.Item>
+            <ButtonGroup>    
+          <Button variant='secondary'><Telephone /></Button>
+          <Button variant='secondary'><EnvelopeAt /></Button>
+          <Button variant='secondary'><PersonAdd /></Button>
+          <Button variant='secondary'><PersonDash /></Button>
+          </ButtonGroup>
+                  
           </ListGroup>
    
         </Col>

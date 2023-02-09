@@ -5,7 +5,8 @@ import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/esm/Row'
 import Form from 'react-bootstrap/esm/Form'
 import Button from 'react-bootstrap/esm/Button'
-import { Trash } from 'react-bootstrap-icons'
+import { CloudUpload, Trash } from 'react-bootstrap-icons'
+import { ButtonGroup } from 'react-bootstrap'
 
 export default function EditExpense() {
   return (
@@ -13,9 +14,10 @@ export default function EditExpense() {
     <>
     <Header 
     title={'Tools Dashboard'}
-    link1={'invetory'}
-    link2={'Team'}
+    link1={'Invetory'}
+    link2={'Community'}
     link3={'Profile'}
+    link4={'Add Employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}
@@ -52,10 +54,15 @@ export default function EditExpense() {
             <Form.Label>Notes</Form.Label>
             <Form.Control as='textarea' aria-label='notes'/>
         </Form.Group>
-        <Button className='mt-3' type='submit' variant='success'>Update</Button>
-        <Button className=' mx-5 mt-3' type='submit' variant='success'>
-            <Trash />
+        <ButtonGroup gap={2} className='d-flex space-evenly'>
+        <Button className='mt-3' type='submit' variant='success'>
+            <CloudUpload />{' '}
+            Update
         </Button>
+        <Button className='mt-3' type='submit' variant='danger'>
+            <Trash /> delete
+        </Button>
+        </ButtonGroup>
 
       </Form>
         </Col>

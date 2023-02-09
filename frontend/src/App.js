@@ -1,4 +1,5 @@
 import HomeScreen from "./screens/HomeScreen";
+import 'react-toastify/dist/ReactToastify.css';
 import WelcomeScreen from "./screens/welcomeScreen/WelcomeScreen";
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -14,7 +15,7 @@ import CreateProduct from "./screens/admin/CreateProduct";
 import Post from "./components/Post";
 import EditExpense from "./screens/user/EditExpense";
 import StatScreen from "./screens/admin/StatScreen";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 
 function App() {
   return (

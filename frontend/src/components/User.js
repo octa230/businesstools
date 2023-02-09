@@ -85,21 +85,15 @@ export default function User(props) {
             <ListGroup.Item><Text>Phone: </Text>{user.phone}</ListGroup.Item>
             <ListGroup.Item><Text>Added On: </Text>{user.createdAt}</ListGroup.Item>
             <ListGroup.Item>
-              <Row>
-                <Col xs={12} md={8} className='p-4'>
-                <ButtonGroup className='me-4' aria-label='Actions'>
+                <ButtonGroup className='me-4 d-flex space-evenly btn-sm' aria-label='Actions'>
                     <Button variant='secondary'><Telephone/>{' '}</Button>
-                    <Button variant='secondary'><EnvelopeAt/></Button>
+                    <Button variant='secondary'><EnvelopeAt/>{''}</Button>
                     <Button variant='secondary' onClick={follow}><PersonAdd/></Button>
                     <Button variant='secondary' onClick={unfollow}><PersonDash/></Button>
                   </ButtonGroup>
-                </Col>
-              </Row>
             </ListGroup.Item>
           </ListGroup>
-   
         </Col>
-      
       </Row>
 ))}
     </Container>

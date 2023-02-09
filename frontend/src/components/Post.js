@@ -1,15 +1,16 @@
 import React, {useReducer, useContext, useEffect, useState, useRef} from 'react'
-import Card from 'react-bootstrap/esm/Card'
+import Card from 'react-bootstrap/esm/Card';
+import {formatDistance, subDays} from 'date-fns'
 import { Store } from '../Store'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import ListGroup from 'react-bootstrap/esm/ListGroup'
 import Form from 'react-bootstrap/esm/Form'
-import Comment from './Comment'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
 import {Button, Badge, Container} from 'react-bootstrap/esm/'
 import { Trash,} from 'react-bootstrap-icons'
 import { useNavigate, useParams } from 'react-router-dom'
+import moment from 'moment';
 
 
 
@@ -53,16 +54,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 export default function Post(props) {
 
 const {post}=props
-const postId = post._id
+const postId = post._id;
 let cxt = post.comments.length;
-const params = useParams()
-const {id: postID}= params
 
 let commentsRef = useRef
 
 
-  const[comment, setComment] = useState('')
-  const navigate = useNavigate()
+const[comment, setComment] = useState('')
  
 
 const [{ error, posts, loadingCreateComment, loading, loadingDelete }, dispatch] = 
@@ -91,7 +89,7 @@ const [{ error, posts, loadingCreateComment, loading, loadingDelete }, dispatch]
       } 
       
     }catch(error){
-        console.log(error)
+        toast.error(error)
       }
     }
     getPost()
@@ -150,24 +148,23 @@ async function removePost(post){
   return (
     <Container className='fluid'>
       
-       <Card border='light' className='mb-4 p-0' key={post.id}>  
-       <Card.Header className='d-flex post-user' as={'h5'}>{`@${post.user}`}
+       <Card border='light' className='mb-4 p-0' key={post._id}>  
+       <Card.Header className='d-flex post-user text-muted' as={'h5'}>{`@${post.user}`}
          <span>
-            { cxt !== 1 || 0 ? (<Badge>{cxt}: comments</Badge>): (<Badge>{cxt}: comment</Badge>)}
+            { cxt !== 1 || 0 ? (<Badge bg='light' text='dark'>{cxt}: comments</Badge>): (<Badge bg='light' text='dark'>{cxt}: comment</Badge>)}
           </span>
           </Card.Header>
        <Card.Body>
          
-           <Card.Subtitle className='mt-3'>{post.user ? post.user : 'Identity hidden'}</Card.Subtitle>
+          {/* <Card.Subtitle className='mt-3'>{post.user ? post.user : 'Identity hidden'}</Card.Subtitle> */}
          {/* <Card.Subtitle className='mt-3'>post header</Card.Subtitle> */}
-         <Card.Text className='mt-2'>
+         <Card.Text className='mt-2 mb-0'>
            {post.text}
            </Card.Text>
          <Card.Subtitle className='mt-3'>Comments:</Card.Subtitle>
        </Card.Body>
-       <ListGroup  className='list-group-flash'>
-         
-          
+       
+       <ListGroup  className='list-group flash'> 
           {post.comments.map((cx)=>(
                <ListGroup.Item key={cx._id}>
                <ul className='d-flex commentHead'>
@@ -197,12 +194,17 @@ async function removePost(post){
          </ListGroup.Item>
        
        <Card.Body>
-         <Button onClick={removePost} className='deletePost' variant='secondary'>
-           <Trash />
-         </Button>
+       
  
        </Card.Body>
-       <Card.Footer>{post.createdAt}</Card.Footer>
+       <Card.Footer className='text-muted c-footer'>
+        <p className='post-footer-text'>
+          {post.createdAt}
+          <span>  
+           <Trash className='deletePost' onClick={removePost}/>
+         </span>
+          </p>
+       </Card.Footer>
      </Card>
     
     </Container>
