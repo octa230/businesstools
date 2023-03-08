@@ -13,6 +13,8 @@ import User from '../../components/User'
 import Button from 'react-bootstrap/esm/Button'
 import { Store } from '../../Store'
 import { useParams } from 'react-router-dom'
+import MyPost from '../../components/MyPost'
+import { ListGroup } from 'react-bootstrap'
 
 
 
@@ -123,6 +125,11 @@ const newPost =  async(e) => {
             <Col className='posts-column' xs={12} md={3}>
                 <Form.Text>
                     <h1>My Posts</h1>
+                    <ListGroup>
+                        {posts.map((post)=>(
+                            <MyPost post={post}/>
+                        ))}
+                    </ListGroup>
                 </Form.Text>
             </Col>
             <Col xs={12} xl={5} className='mt-3 p-4 dashboard-center'>

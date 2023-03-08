@@ -21,7 +21,7 @@ postRouter.get('/posts/:userId', getUserPosts)
 postRouter.post('/posts/new', createPost)
 postRouter.post('/post/:id/comment', addComment)
 postRouter.delete('/delete/post/:id', deletePost)
-postRouter.get('/post/:id', getPost)
+postRouter.get('/post/:Id', getPost)
 
 
 

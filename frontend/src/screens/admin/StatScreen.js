@@ -6,6 +6,7 @@ import MonthExpense from '../../components/MonthExpense'
 import { AnnualGraph } from '../../components/AnnualGraph'
 import Header from '../../components/Header'
 import { Helmet } from 'react-helmet-async'
+import AdminNav from './AdminNav'
 
 export default function StatScreen() {
   return (
@@ -15,10 +16,11 @@ export default function StatScreen() {
     </Helmet>
        <Header 
     title={'Tools Dashboard'}
-    link1={'invetory'}
-    link2={'Team'}
+    link1={'Invetory'}
+    link2={'Community'}
     link3={'Profile'}
-    link5={'Add-employee'}
+    link4={'Create Product'}
+    link5={'Add Employee'}
     dropdown={'Account'}
     dropdownLink1={'Sign Out'}
     dropdownLink2={'Add Expense'}
@@ -26,7 +28,9 @@ export default function StatScreen() {
     />
     <Container fluid>
         <Row>
-            <Col xs={12} md={2}> col-1</Col>
+            <Col xs={12} md={2}> 
+            <AdminNav />
+            </Col>
             <Col xs={12} md={6}> 
             <AnnualGraph />
             </Col>

@@ -4,13 +4,13 @@ import Row from 'react-bootstrap/esm/Row';
 import { Store } from '../Store';
 import Col from 'react-bootstrap/esm/Col';
 import Image from 'react-bootstrap/esm/Image';
-import {ButtonGroup, Card, ListGroup} from 'react-bootstrap/esm/'
+import {ButtonGroup, Card, ListGroup, Form} from 'react-bootstrap/esm/'
 import Button from 'react-bootstrap/esm/Button';
 import Text from 'react-bootstrap/esm/FormText'
 import Header from './Header';
 import { PencilFill, Superscript } from 'react-bootstrap-icons';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 
 
 function reducer(state, action){
@@ -48,6 +48,9 @@ export default function Profile(props) {
   const navigate = useNavigate()
   const params = useParams()
   const {_id: profileId} = params
+  const date = new Date()
+  const month = date.getMonth()+ 1
+  const day = date.getDate() 
 
  
   const {state, dispatch: ctxDispatch} = useContext(Store)
@@ -85,6 +88,36 @@ export default function Profile(props) {
             {' '}Edit profile
             </Button>
             </Card.Header>
+            <Card.Body>
+              <Form>
+                <Form.Text className='d-flex justify-center'>
+                  <h5>Check In Register -year: {date.getFullYear()}</h5>
+                </Form.Text>
+                <Row className='mt-2'>
+                  <Form.Group as={Col} controlId='InTime'>
+                    <Form.Label>In Time</Form.Label>
+                    <Form.Control/>
+                  </Form.Group>
+                  <Form.Group as={Col} controlId='OutTime'>
+                    <Form.Label>Out Time</Form.Label>
+                    <Form.Control/>
+                  </Form.Group>
+                </Row>
+                <Row className='mt-2'>
+                  <Form.Group as={Col} controlId='Month'>
+                    <Form.Label>Month: {month}</Form.Label>
+                    <Form.Control/>
+                  </Form.Group>
+                  <Form.Group as={Col} controlId='Year'>
+                    <Form.Label>Day: {day}</Form.Label>
+                    <Form.Control/>
+                  </Form.Group>
+                </Row>
+                <Button className='mt-2'  size='sm' variant='secondary'>
+                  submit
+                </Button>
+              </Form>
+            </Card.Body>
           </Card>
           <Card className='mt-3'>
             <Card.Header>

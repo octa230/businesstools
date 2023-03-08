@@ -1,15 +1,20 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, InputGroup } from 'react-bootstrap'
+import { Search } from 'react-bootstrap-icons'
 
-export default function Search() {
+export default function SearchBar() {
   return (
-      <Form.Group>
+      <Form>
+        <InputGroup>
         <Form.Control 
         type='text' 
         name='q' 
         id='q'
-        placeholder='search'
-        />
-      </Form.Group>
+        placeholder='search'/>
+        <InputGroup.Text>
+        <Search />
+        </InputGroup.Text>
+      </InputGroup>
+      </Form>
   )
 }

@@ -87,6 +87,9 @@ export default function CreateProduct() {
     />
     <Container className='createProduct'>
         <Form onSubmit={newProduct}>
+        <Form.Text>
+                <h1>Add New Product</h1>
+            </Form.Text>
             <Form.Group className='mb-3' controlId='name'>
                 <Form.Label>Name: </Form.Label>
                 <Form.Control value={name} onChange={(e)=>setName(e.target.value)} placeholder='product name'/>

@@ -36,7 +36,7 @@ export default function User() {
     users: [],
     loading: true,
     error: '',
-  },[]);
+  });
 
     useEffect(()=> {
       const fetchUsers = async () => {
@@ -68,8 +68,8 @@ export default function User() {
     />
     <Container fluid className='mt-4'>
       {users.map((user) => (
-      <Row className='mt-4'>
-        <Col xs ={12} md={3} key={user._id}>
+      <Row className='mt-4'  key={user._id}>
+        <Col xs ={12} md={3}>
 
         <Image className='rounded form-img' 
         src='https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg
